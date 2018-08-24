@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_margin">10dp</dimen>
+    <dimen name="dialog_title_text_size">18dp</dimen>
+    <dimen name="set_color_button_margin">5dp</dimen>
+    <dimen name="set_color_button_wh">50dp</dimen>
+</resources>
