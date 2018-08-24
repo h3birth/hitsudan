@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorFab">#009688</color>
+    <color name="colorPenBlack">#212121</color>
+    <color name="colorPenBlue">#2196f3</color>
+    <color name="colorPenGreen">#4caf50</color>
+    <color name="colorPenOrange">#FF9800</color>
+    <color name="colorPenRed">#f44336</color>
+    <color name="colorPenBrawn">#795548</color>
+    <color name="colorPenCyan">#00BCD4</color>
+    <color name="colorPenTeal">#009688</color>
+    <color name="colorPenYellow">#FFEB3B</color>
+    <color name="colorPenPink">#E91E63</color>
+    <color name="colorPenGrey">#9E9E9E</color>
+    <color name="colorPenIndigo">#3F51B5</color>
+    <color name="colorPenLime">#CDDC39</color>
+    <color name="colorPenDeepOrange">#FF5722</color>
+    <color name="colorPenPeople">#9C27B0</color>
+    <color name="colorPenWhite">#ffffff</color>
+</resources>
