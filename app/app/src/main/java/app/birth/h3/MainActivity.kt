@@ -7,21 +7,27 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.SeekBar
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import app.birth.h3.databinding.ActivityMainBinding
 import app.birth.h3.util.UtilCommon
 import app.birth.h3.view.PaintView
-import kotlinx.android.synthetic.main.activity_main.*
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     lateinit var common: UtilCommon
     private val mContext: Context = this
     var setColortext: String = "●"
 
+    private val viewModel: MainViewModel by viewModels()
+    private var binding: ActivityMainBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // カスタムビューを設定
         val customLayout = layoutInflater.inflate(R.layout.dialog_pen_set, null)
@@ -30,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         val prefer : SharedPreferences = this.getSharedPreferences(getString(R.string.pref_pen_set), Context.MODE_PRIVATE)
 
         //
-        fab_pen_set.setOnClickListener {view ->
+        binding?.fabPenSet?.setOnClickListener {view ->
             val customLayout = layoutInflater.inflate(R.layout.dialog_pen_set, null)
             var seekbar_pen_weight : SeekBar = customLayout.findViewById(R.id.seekbar_pen_weight)
             seekbar_pen_weight.setProgress(prefer.getInt(getString(R.string.pref_key_pen_weight), 10))
@@ -105,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 削除
-        fab_delete.setOnClickListener  {view ->
+        binding?.fabDelete?.setOnClickListener  {view ->
             var paintView : PaintView = findViewById(R.id.paintView)
             paintView.clear()
         }
