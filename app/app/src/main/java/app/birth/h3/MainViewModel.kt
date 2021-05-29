@@ -1,18 +1,22 @@
 package app.birth.h3
 
-import androidx.hilt.lifecycle.ViewModelInject
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.birth.h3.model.Color
+import app.birth.h3.repository.ColorRepository
 import app.birth.h3.repository.SharePreferenceRepository
-import app.birth.h3.repository.SharePreferenceRepositoryImpl
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-        val spf: SharePreferenceRepository
+        val spf: SharePreferenceRepository,
+        val colors: ColorRepository
 ) : ViewModel() {
     val penWeight = MutableLiveData(spf.getPenWeight())
 
+    fun onClickPenColor(color: Color) {
+        Log.i("color", "click color = ${color.toString()}")
+    }
 }

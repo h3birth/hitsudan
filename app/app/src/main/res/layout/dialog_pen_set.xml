@@ -51,7 +51,7 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:onClick="@{() -> viewModel.onClickPenColor(1)}"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.black)}"
                     android:background="@color/colorPenBlack"
                     android:textColor="@color/colorPenWhite" />
 
