@@ -14,4 +14,5 @@ class MainViewModel @Inject constructor(
         val spf: SharePreferenceRepository
 ) : ViewModel() {
     val penWeight = MutableLiveData(spf.getPenWeight())
+
 }

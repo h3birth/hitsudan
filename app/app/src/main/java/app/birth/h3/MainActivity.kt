@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import app.birth.h3.databinding.ActivityMainBinding
+import app.birth.h3.databinding.DialogPenSetBinding
 import app.birth.h3.util.UtilCommon
 import app.birth.h3.view.PaintView
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,8 +39,9 @@ class MainActivity : AppCompatActivity() {
         //
         binding?.fabPenSet?.setOnClickListener {view ->
             val customLayout = layoutInflater.inflate(R.layout.dialog_pen_set, null)
-            var seekbar_pen_weight : SeekBar = customLayout.findViewById(R.id.seekbar_pen_weight)
-            seekbar_pen_weight.setProgress(prefer.getInt(getString(R.string.pref_key_pen_weight), 10))
+            val dialogBinding = DialogPenSetBinding.inflate(this.layoutInflater)
+            dialogBinding.lifecycleOwner = this
+            dialogBinding.viewModel = viewModel
 
             // 1段目
             var button_set_color_black : Button = customLayout.findViewById(R.id.button_set_color_black)

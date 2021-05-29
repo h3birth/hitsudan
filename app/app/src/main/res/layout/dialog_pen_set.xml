@@ -1,258 +1,267 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/id_dialog_pen_set"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:text="@string/setting_pen_weight" />
-
-    <SeekBar
-        android:id="@+id/seekbar_pen_weight"
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="app.birth.h3.MainViewModel" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/id_dialog_pen_set"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginTop="@dimen/fab_margin" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:text="@string/setting_pen_color" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:text="@string/setting_pen_weight" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        <SeekBar
+            android:id="@+id/seekbar_pen_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:progress="@={viewModel.penWeight}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:text="@string/setting_pen_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_set_color_black"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> viewModel.onClickPenColor(1)}"
+                    android:background="@color/colorPenBlack"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_blue"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenBlue"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_green"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenGreen"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_orange"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenOrange"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_red"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenRed"
+                    android:textColor="@color/colorPenWhite" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_set_color_brawn"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenBrawn"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_cyan"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenCyan"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_teal"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenTeal"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_yellow"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenYellow"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_pink"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenPink"
+                    android:textColor="@color/colorPenWhite" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_set_color_grey"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenGrey"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_indigo"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenIndigo"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_lime"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenLime"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_deep_orange"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenDeepOrange"
+                    android:textColor="@color/colorPenWhite" />
+
+                <Button
+                    android:id="@+id/button_set_color_people"
+                    android:layout_width="@dimen/set_color_button_wh"
+                    android:layout_height="@dimen/set_color_button_wh"
+                    android:layout_margin="@dimen/set_color_button_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPenPeople"
+                    android:textColor="@color/colorPenWhite" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:text="@string/setting_background_color" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fab_margin"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button_set_color_black"
+                android:id="@+id/button_set_background_color_white"
                 android:layout_width="@dimen/set_color_button_wh"
                 android:layout_height="@dimen/set_color_button_wh"
                 android:layout_margin="@dimen/set_color_button_margin"
                 android:layout_weight="1"
-                android:background="@color/colorPenBlack"
+                android:background="@color/colorBackgroundWhite"
+                android:textColor="@color/colorPenBlack" />
+
+            <Button
+                android:id="@+id/button_set_background_color_black"
+                android:layout_width="@dimen/set_color_button_wh"
+                android:layout_height="@dimen/set_color_button_wh"
+                android:layout_margin="@dimen/set_color_button_margin"
+                android:layout_weight="1"
+                android:background="@color/colorBackgroundBlack"
                 android:textColor="@color/colorPenWhite" />
 
             <Button
-                android:id="@+id/button_set_color_blue"
+                android:id="@+id/button_set_background_color_pink"
                 android:layout_width="@dimen/set_color_button_wh"
                 android:layout_height="@dimen/set_color_button_wh"
                 android:layout_margin="@dimen/set_color_button_margin"
                 android:layout_weight="1"
-                android:background="@color/colorPenBlue"
-                android:textColor="@color/colorPenWhite" />
+                android:background="@color/colorBackgroundPink"
+                android:textColor="@color/colorPenBlack" />
 
             <Button
-                android:id="@+id/button_set_color_green"
+                android:id="@+id/button_set_background_color_yellow"
                 android:layout_width="@dimen/set_color_button_wh"
                 android:layout_height="@dimen/set_color_button_wh"
                 android:layout_margin="@dimen/set_color_button_margin"
                 android:layout_weight="1"
-                android:background="@color/colorPenGreen"
-                android:textColor="@color/colorPenWhite" />
+                android:background="@color/colorBackgroundYellow"
+                android:textColor="@color/colorPenBlack" />
 
             <Button
-                android:id="@+id/button_set_color_orange"
+                android:id="@+id/button_set_background_color_blue"
                 android:layout_width="@dimen/set_color_button_wh"
                 android:layout_height="@dimen/set_color_button_wh"
                 android:layout_margin="@dimen/set_color_button_margin"
                 android:layout_weight="1"
-                android:background="@color/colorPenOrange"
-                android:textColor="@color/colorPenWhite" />
-
-            <Button
-                android:id="@+id/button_set_color_red"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenRed"
-                android:textColor="@color/colorPenWhite" />
+                android:background="@color/colorBackgroundBlue"
+                android:textColor="@color/colorPenBlack" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button_set_color_brawn"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenBrawn"
-                android:textColor="@color/colorPenWhite" />
-
-            <Button
-                android:id="@+id/button_set_color_cyan"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenCyan"
-                android:textColor="@color/colorPenWhite" />
-
-            <Button
-                android:id="@+id/button_set_color_teal"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenTeal"
-                android:textColor="@color/colorPenWhite" />
-
-            <Button
-                android:id="@+id/button_set_color_yellow"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenYellow"
-                android:textColor="@color/colorPenWhite" />
-
-            <Button
-                android:id="@+id/button_set_color_pink"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenPink"
-                android:textColor="@color/colorPenWhite" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button_set_color_grey"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenGrey"
-                android:textColor="@color/colorPenWhite" />
-
-            <Button
-                android:id="@+id/button_set_color_indigo"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenIndigo"
-                android:textColor="@color/colorPenWhite" />
-
-            <Button
-                android:id="@+id/button_set_color_lime"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenLime"
-                android:textColor="@color/colorPenWhite" />
-
-            <Button
-                android:id="@+id/button_set_color_deep_orange"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenDeepOrange"
-                android:textColor="@color/colorPenWhite" />
-
-            <Button
-                android:id="@+id/button_set_color_people"
-                android:layout_width="@dimen/set_color_button_wh"
-                android:layout_height="@dimen/set_color_button_wh"
-                android:layout_margin="@dimen/set_color_button_margin"
-                android:layout_weight="1"
-                android:background="@color/colorPenPeople"
-                android:textColor="@color/colorPenWhite" />
-
-        </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:text="@string/setting_background_color" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button_set_background_color_white"
-            android:layout_width="@dimen/set_color_button_wh"
-            android:layout_height="@dimen/set_color_button_wh"
-            android:layout_margin="@dimen/set_color_button_margin"
-            android:layout_weight="1"
-            android:background="@color/colorBackgroundWhite"
-            android:textColor="@color/colorPenBlack" />
-
-        <Button
-            android:id="@+id/button_set_background_color_black"
-            android:layout_width="@dimen/set_color_button_wh"
-            android:layout_height="@dimen/set_color_button_wh"
-            android:layout_margin="@dimen/set_color_button_margin"
-            android:layout_weight="1"
-            android:background="@color/colorBackgroundBlack"
-            android:textColor="@color/colorPenWhite" />
-
-        <Button
-            android:id="@+id/button_set_background_color_pink"
-            android:layout_width="@dimen/set_color_button_wh"
-            android:layout_height="@dimen/set_color_button_wh"
-            android:layout_margin="@dimen/set_color_button_margin"
-            android:layout_weight="1"
-            android:background="@color/colorBackgroundPink"
-            android:textColor="@color/colorPenBlack" />
-
-        <Button
-            android:id="@+id/button_set_background_color_yellow"
-            android:layout_width="@dimen/set_color_button_wh"
-            android:layout_height="@dimen/set_color_button_wh"
-            android:layout_margin="@dimen/set_color_button_margin"
-            android:layout_weight="1"
-            android:background="@color/colorBackgroundYellow"
-            android:textColor="@color/colorPenBlack" />
-
-        <Button
-            android:id="@+id/button_set_background_color_blue"
-            android:layout_width="@dimen/set_color_button_wh"
-            android:layout_height="@dimen/set_color_button_wh"
-            android:layout_margin="@dimen/set_color_button_margin"
-            android:layout_weight="1"
-            android:background="@color/colorBackgroundBlue"
-            android:textColor="@color/colorPenBlack" />
-
-    </LinearLayout>
-
-
-</LinearLayout>
+</layout>
