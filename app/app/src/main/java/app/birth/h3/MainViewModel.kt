@@ -14,9 +14,5 @@ class MainViewModel @Inject constructor(
         val spf: SharePreferenceRepository,
         val colors: ColorRepository
 ) : ViewModel() {
-    val penWeight = MutableLiveData(spf.getPenWeight())
 
-    fun onClickPenColor(color: Color) {
-        Log.i("color", "click color = ${color.toString()}")
-    }
 }

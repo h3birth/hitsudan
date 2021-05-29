@@ -5,6 +5,7 @@ import app.birth.h3.model.Color
 interface ColorRepository {
     fun listPenColors() : List<Color>
     fun listBackgroundColors() : List<Color>
+    fun getColorById(id: Int) : Color?
 
     val black: Color
     val blue: Color
@@ -20,7 +21,7 @@ interface ColorRepository {
     val indigo: Color
     val lime: Color
     val deepOrange: Color
-    val people: Color
+    val purple: Color
     val white: Color
     val dark: Color
     val pink: Color

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="app.birth.h3.MainViewModel" />
+            type="app.birth.h3.view.PenSettingViewModel" />
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -51,8 +51,9 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
+                    android:text="@{viewModel.isBlack}"
                     android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.black)}"
-                    android:background="@color/colorPenBlack"
+                    android:background="@{viewModel.colors.black.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -61,7 +62,9 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenBlue"
+                    android:text="@{viewModel.isBlue}"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.blue)}"
+                    android:background="@{viewModel.colors.blue.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -70,7 +73,9 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenGreen"
+                    android:text="@{viewModel.isGreen}"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.green)}"
+                    android:background="@{viewModel.colors.green.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -79,7 +84,8 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenOrange"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.orange)}"
+                    android:background="@{viewModel.colors.orange.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -88,7 +94,8 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenRed"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.red)}"
+                    android:background="@{viewModel.colors.red.code}"
                     android:textColor="@color/colorPenWhite" />
 
             </LinearLayout>
@@ -105,7 +112,8 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenBrawn"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.brawn)}"
+                    android:background="@{viewModel.colors.blue.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -114,7 +122,8 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenCyan"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.cyan)}"
+                    android:background="@{viewModel.colors.cyan.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -123,7 +132,8 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenTeal"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.teal)}"
+                    android:background="@{viewModel.colors.teal.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -132,7 +142,8 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenYellow"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.yellow)}"
+                    android:background="@{viewModel.colors.yellow.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -141,7 +152,8 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenPink"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.magenta)}"
+                    android:background="@{viewModel.colors.magenta.code}"
                     android:textColor="@color/colorPenWhite" />
 
             </LinearLayout>
@@ -158,7 +170,8 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenGrey"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.grey)}"
+                    android:background="@{viewModel.colors.grey.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -167,7 +180,8 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenIndigo"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.indigo)}"
+                    android:background="@{viewModel.colors.indigo.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -176,7 +190,8 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenLime"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.lime)}"
+                    android:background="@{viewModel.colors.lime.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
@@ -185,16 +200,18 @@
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenDeepOrange"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.deepOrange)}"
+                    android:background="@{viewModel.colors.deepOrange.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
-                    android:id="@+id/button_set_color_people"
+                    android:id="@+id/button_set_color_purple"
                     android:layout_width="@dimen/set_color_button_wh"
                     android:layout_height="@dimen/set_color_button_wh"
                     android:layout_margin="@dimen/set_color_button_margin"
                     android:layout_weight="1"
-                    android:background="@color/colorPenPeople"
+                    android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.purple)}"
+                    android:background="@{viewModel.colors.purple.code}"
                     android:textColor="@color/colorPenWhite" />
 
             </LinearLayout>
@@ -221,7 +238,8 @@
                 android:layout_height="@dimen/set_color_button_wh"
                 android:layout_margin="@dimen/set_color_button_margin"
                 android:layout_weight="1"
-                android:background="@color/colorBackgroundWhite"
+                android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.white)}"
+                android:background="@{viewModel.colors.white.code}"
                 android:textColor="@color/colorPenBlack" />
 
             <Button
@@ -230,7 +248,8 @@
                 android:layout_height="@dimen/set_color_button_wh"
                 android:layout_margin="@dimen/set_color_button_margin"
                 android:layout_weight="1"
-                android:background="@color/colorBackgroundBlack"
+                android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.dark)}"
+                android:background="@{viewModel.colors.dark.code}"
                 android:textColor="@color/colorPenWhite" />
 
             <Button
@@ -239,7 +258,8 @@
                 android:layout_height="@dimen/set_color_button_wh"
                 android:layout_margin="@dimen/set_color_button_margin"
                 android:layout_weight="1"
-                android:background="@color/colorBackgroundPink"
+                android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.pink)}"
+                android:background="@{viewModel.colors.pink.code}"
                 android:textColor="@color/colorPenBlack" />
 
             <Button
@@ -248,7 +268,8 @@
                 android:layout_height="@dimen/set_color_button_wh"
                 android:layout_margin="@dimen/set_color_button_margin"
                 android:layout_weight="1"
-                android:background="@color/colorBackgroundYellow"
+                android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.lightYellow)}"
+                android:background="@{viewModel.colors.lightYellow.code}"
                 android:textColor="@color/colorPenBlack" />
 
             <Button
@@ -257,7 +278,8 @@
                 android:layout_height="@dimen/set_color_button_wh"
                 android:layout_margin="@dimen/set_color_button_margin"
                 android:layout_weight="1"
-                android:background="@color/colorBackgroundBlue"
+                android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.lightBlue)}"
+                android:background="@{viewModel.colors.lightBlue.code}"
                 android:textColor="@color/colorPenBlack" />
 
         </LinearLayout>

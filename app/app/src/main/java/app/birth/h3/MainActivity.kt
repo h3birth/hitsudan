@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.SeekBar
 import androidx.activity.viewModels
@@ -14,6 +15,7 @@ import app.birth.h3.databinding.ActivityMainBinding
 import app.birth.h3.databinding.DialogPenSetBinding
 import app.birth.h3.util.UtilCommon
 import app.birth.h3.view.PaintView
+import app.birth.h3.view.PenSettingDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,6 +40,8 @@ class MainActivity : AppCompatActivity() {
 
         //
         binding?.fabPenSet?.setOnClickListener {view ->
+            PenSettingDialogFragment().show(supportFragmentManager, PenSettingDialogFragment.TAG)
+            /*
             val customLayout = layoutInflater.inflate(R.layout.dialog_pen_set, null)
             val dialogBinding = DialogPenSetBinding.inflate(this.layoutInflater)
             dialogBinding.lifecycleOwner = this
@@ -110,6 +114,8 @@ class MainActivity : AppCompatActivity() {
                 })
                 show()
             }
+
+             */
         }
 
         // 削除
@@ -117,7 +123,6 @@ class MainActivity : AppCompatActivity() {
             var paintView : PaintView = findViewById(R.id.paintView)
             paintView.clear()
         }
-
     }
 
     fun getCurrentPenWeight(seekBar: SeekBar){

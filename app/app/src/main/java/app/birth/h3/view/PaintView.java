@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 import app.birth.h3.R;
+import app.birth.h3.model.Color;
+import app.birth.h3.repository.ColorRepository;
+import app.birth.h3.repository.ColorRepositoryImpl;
 import app.birth.h3.util.UtilCommon;
 
 
@@ -30,6 +33,7 @@ public class PaintView extends View {
     private Path current_path;
     private List<Path> listPath = new ArrayList<Path>();
     private List<Paint> listPaint = new ArrayList<Paint>();
+    private ColorRepository color = new ColorRepositoryImpl();
     private boolean flg = false;
     UtilCommon common;
     Map<Integer, Integer> matchNumberCountMap = new HashMap<>();
@@ -95,38 +99,10 @@ public class PaintView extends View {
 
     public void setColor(){
         SharedPreferences prefer = context.getSharedPreferences(context.getString(R.string.pref_pen_set), Context.MODE_PRIVATE);
-        Integer current_color = prefer.getInt(context.getString(R.string.pref_key_pen_color), 0);
-        if( current_color == 0 ){ // くろ
-            current_paint.setColor(getResources().getColor(R.color.colorPenBlack));
-        }else if( current_color == 1 ){ // 青
-            current_paint.setColor(getResources().getColor(R.color.colorPenBlue));
-        }else if( current_color == 2 ){ // みどり
-            current_paint.setColor(getResources().getColor(R.color.colorPenGreen));
-        }else if( current_color == 3 ){ // オレンジ
-            current_paint.setColor(getResources().getColor(R.color.colorPenOrange));
-        }else if( current_color == 4 ){ // 赤
-            current_paint.setColor(getResources().getColor(R.color.colorPenRed));
-        }else if( current_color == 5 ){ // 茶色
-            current_paint.setColor(getResources().getColor(R.color.colorPenBrawn));
-        }else if( current_color == 6 ){ // シアン
-            current_paint.setColor(getResources().getColor(R.color.colorPenCyan));
-        }else if( current_color == 7 ){ // テール
-            current_paint.setColor(getResources().getColor(R.color.colorPenTeal));
-        }else if( current_color == 8 ){ // 黄色
-            current_paint.setColor(getResources().getColor(R.color.colorPenYellow));
-        }else if( current_color == 9 ){ // ピンク
-            current_paint.setColor(getResources().getColor(R.color.colorPenPink));
-        }else if( current_color == 10 ){ // グレイ
-            current_paint.setColor(getResources().getColor(R.color.colorPenGrey));
-        }else if( current_color == 11 ){ // インディゴ
-            current_paint.setColor(getResources().getColor(R.color.colorPenIndigo));
-        }else if( current_color == 12 ){ // ライム
-            current_paint.setColor(getResources().getColor(R.color.colorPenLime));
-        }else if( current_color == 13 ){ // ディープオレンジ
-            current_paint.setColor(getResources().getColor(R.color.colorPenDeepOrange));
-        }else if( current_color == 14 ){ // 紫
-            current_paint.setColor(getResources().getColor(R.color.colorPenPeople));
-        }
+        Integer current_color_id = prefer.getInt(context.getString(R.string.pref_key_pen_color), 0);
+        Color current_color = color.getColorById(current_color_id);
+        assert current_color != null;
+        current_paint.setColor(android.graphics.Color.parseColor(current_color.getCode()));
     }
 
     public void setPen(){

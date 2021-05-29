@@ -31,6 +31,10 @@ class ColorRepositoryImpl @Inject constructor(): ColorRepository {
 
     override fun listBackgroundColors() : List<Color> = colors.subList(15, 19)
 
+    override fun getColorById(id: Int) = colors.find {
+        it.id == id
+    }
+
     override val black = colors.get(0)
     override val blue = colors.get(1)
     override val green = colors.get(2)
@@ -45,7 +49,7 @@ class ColorRepositoryImpl @Inject constructor(): ColorRepository {
     override val indigo = colors.get(11)
     override val lime = colors.get(12)
     override val deepOrange = colors.get(13)
-    override val people = colors.get(14)
+    override val purple = colors.get(14)
     override val white = colors.get(15)
     override val dark = colors.get(16)
     override val pink = colors.get(17)
