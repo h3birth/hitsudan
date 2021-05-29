@@ -3,6 +3,7 @@
     <string name="setting_title">設定</string>
     <string name="setting_pen_weight">ペンの太さ</string>
     <string name="setting_pen_color">ペンの色</string>
+    <string name="setting_background_color">背景の色</string>
 
     <string name="pref_pen_set">PREF_PEN_SET</string>
     <string name="pref_key_pen_weight">PREF_KEY_PEN_WEIGHT</string>
