@@ -116,7 +116,7 @@
                     android:layout_weight="1"
                     android:text="@{viewModel.isBrawn}"
                     android:onClick="@{() -> viewModel.onClickPenColor(viewModel.colors.brawn)}"
-                    android:background="@{viewModel.colors.blue.code}"
+                    android:background="@{viewModel.colors.brawn.code}"
                     android:textColor="@color/colorPenWhite" />
 
                 <Button
