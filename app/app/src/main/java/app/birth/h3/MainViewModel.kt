@@ -1,10 +1,12 @@
 package app.birth.h3
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import app.birth.h3.model.Color
 import app.birth.h3.repository.ColorRepository
@@ -18,6 +20,10 @@ class MainViewModel @Inject constructor(
         val colors: ColorRepository
 ) : ViewModel() {
     val backgroundColor = MutableLiveData(getColor(spf.getBackgroundColor()))
+    private val shownEraser = MutableLiveData(spf.getShownEraser())
+    val eraserButtonVisibility = Transformations.map(shownEraser) {
+        if(it) View.VISIBLE else View.GONE
+    }
 
     fun getColor(id: Int): String {
         val color = colors.getColorById(id) ?: colors.white
@@ -26,5 +32,6 @@ class MainViewModel @Inject constructor(
 
     fun onSettingBackground() {
         backgroundColor.postValue(getColor(spf.getBackgroundColor()))
+        shownEraser.postValue(spf.getShownEraser())
     }
 }

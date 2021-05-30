@@ -18,6 +18,7 @@ class PenSettingViewModel @Inject constructor(
     val penWeight = MutableLiveData(spf.getPenWeight())
     var penColor = MutableLiveData(spf.getPenColor())
     var backgroundColor = MutableLiveData(spf.getBackgroundColor())
+    val shownEraser = MutableLiveData(spf.getShownEraser())
 
     // color
     val isBlack = Transformations.map (penColor) { isSelect(colors.black) }
@@ -54,6 +55,7 @@ class PenSettingViewModel @Inject constructor(
         spf.setPenWeight(penWeight.value ?: 10)
         spf.setPenColor(penColor.value ?: 1)
         spf.setBackgroundColor(backgroundColor.value ?: 1)
+        spf.setShownEraser(shownEraser.value ?: false)
     }
 
     fun onClickPenColor(color: Color) {

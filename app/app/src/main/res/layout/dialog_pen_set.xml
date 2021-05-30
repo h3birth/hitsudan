@@ -356,6 +356,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_m"
                 android:layout_marginTop="@dimen/margin_m"
+                android:checked="@={viewModel.shownEraser}"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/eraser_switch_label"

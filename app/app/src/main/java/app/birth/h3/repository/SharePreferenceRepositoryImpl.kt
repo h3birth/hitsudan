@@ -35,4 +35,12 @@ class SharePreferenceRepositoryImpl @Inject constructor(
             commit()
         }
     }
+
+    override fun getShownEraser(): Boolean = spf.getBoolean(context.getString(R.string.pref_key_shown_eraser), false)
+    override fun setShownEraser(value: Boolean) {
+        with (spf.edit()) {
+            putBoolean(context.getString(R.string.pref_key_shown_eraser), value)
+            commit()
+        }
+    }
 }
