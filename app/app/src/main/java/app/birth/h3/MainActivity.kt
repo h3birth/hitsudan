@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import app.birth.h3.databinding.ActivityMainBinding
 import app.birth.h3.databinding.DialogPenSetBinding
 import app.birth.h3.util.UtilCommon
@@ -53,8 +54,14 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
             )
             it.addDrawerListener(toggle)
             toggle.syncState()
+            it.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         }
         binding?.navigationView?.setNavigationItemSelectedListener(this)
+
+
+        binding?.fabDrawer?.setOnClickListener {
+            binding?.drawerLayout?.open()
+        }
     }
 
     override fun onClickPositive() {

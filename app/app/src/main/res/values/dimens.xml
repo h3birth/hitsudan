@@ -4,4 +4,6 @@
     <dimen name="dialog_title_text_size">18dp</dimen>
     <dimen name="set_color_button_margin">5dp</dimen>
     <dimen name="set_color_button_wh">50dp</dimen>
+
+    <dimen name="margin_l">16dp</dimen>
 </resources>
