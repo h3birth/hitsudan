@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">ひつだん</string>
     <string name="setting_title">設定</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+
     <string name="setting_pen_weight">ペンの太さ</string>
     <string name="setting_pen_color">ペンの色</string>
     <string name="setting_background_color">背景の色</string>
