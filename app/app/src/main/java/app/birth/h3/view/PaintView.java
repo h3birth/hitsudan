@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -35,6 +37,8 @@ public class PaintView extends View {
     private List<Paint> listPaint = new ArrayList<Paint>();
     private ColorRepository color = new ColorRepositoryImpl();
     private boolean flg = false;
+    private boolean eraser = false;
+    private List<Path> eraserPath = new ArrayList<Path>();
     UtilCommon common;
     Map<Integer, Integer> matchNumberCountMap = new HashMap<>();
     TextView textViewResultNumber;
@@ -97,7 +101,7 @@ public class PaintView extends View {
         current_paint.setStrokeWidth(prefer.getInt(context.getString(R.string.pref_key_pen_weight), 10));
     }
 
-    public void setColor(){
+    public void setPenColor(){
         SharedPreferences prefer = context.getSharedPreferences(context.getString(R.string.pref_pen_set), Context.MODE_PRIVATE);
         Integer current_color_id = prefer.getInt(context.getString(R.string.pref_key_pen_color), 0);
         Color current_color = color.getColorById(current_color_id);
@@ -107,7 +111,6 @@ public class PaintView extends View {
 
     public void setPen(){
         current_paint = new Paint();
-//        current_paint.setColor(getResources().getColor(R.color.colorFab));
         setColor();
         current_paint.setStyle(Paint.Style.STROKE);
         current_paint.setStrokeJoin(Paint.Join.ROUND);
@@ -123,5 +126,25 @@ public class PaintView extends View {
         listPath.clear();
         listPaint.clear();
         invalidate();
+    }
+
+    public void setEraser(boolean isEraser) {
+        eraser = isEraser;
+    }
+
+    public void setEraserColor() {
+        SharedPreferences prefer = context.getSharedPreferences(context.getString(R.string.pref_pen_set), Context.MODE_PRIVATE);
+        Integer current_color_id = prefer.getInt(context.getString(R.string.pref_key_background_color), 0);
+        Color current_color = color.getColorById(current_color_id);
+        assert current_color != null;
+        current_paint.setColor(android.graphics.Color.parseColor(current_color.getCode()));
+    }
+
+    public void setColor() {
+        if(eraser) {
+            setEraserColor();
+        } else {
+            setPenColor();
+        }
     }
 }

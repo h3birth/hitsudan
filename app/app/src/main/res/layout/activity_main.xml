@@ -34,7 +34,8 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:visibility="@{viewModel.eraserButtonVisibility}"
-                app:backgroundTint="@color/fabEraserOff"
+                app:backgroundTint="@{viewModel.eraserButtonColor}"
+                android:onClick="@{()->viewModel.onClickEraser()}"
                 app:layout_constraintBottom_toTopOf="@id/eraser_switch_text"
                 app:layout_constraintStart_toStartOf="@id/fab_delete"
                 app:srcCompat="@drawable/ic_eraser" />
@@ -43,11 +44,12 @@
                 android:id="@+id/eraser_switch_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Off"
+                android:text="@{viewModel.eraserText}"
                 android:gravity="top"
                 android:visibility="@{viewModel.eraserButtonVisibility}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_marginBottom="@dimen/margin_m"
+                android:textColor="@{viewModel.eraserTextColor}"
                 app:layout_constraintBottom_toTopOf="@id/fab_pen_set"
                 app:layout_constraintStart_toStartOf="@id/fab_eraser"
                 app:layout_constraintEnd_toEndOf="@id/fab_eraser"/>

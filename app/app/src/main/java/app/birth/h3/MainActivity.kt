@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import app.birth.h3.databinding.ActivityMainBinding
 import app.birth.h3.databinding.DialogPenSetBinding
 import app.birth.h3.util.UtilCommon
@@ -62,6 +63,11 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
         binding?.fabDrawer?.setOnClickListener {
             binding?.drawerLayout?.open()
         }
+
+        viewModel.onEraser.observe(this, Observer {
+            var paintView : PaintView = findViewById(R.id.paintView)
+            paintView.setEraser(it)
+        })
     }
 
     override fun onClickPositive() {

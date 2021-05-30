@@ -24,6 +24,16 @@ class MainViewModel @Inject constructor(
     val eraserButtonVisibility = Transformations.map(shownEraser) {
         if(it) View.VISIBLE else View.GONE
     }
+    val onEraser = MutableLiveData(false)
+    val eraserButtonColor = Transformations.map(onEraser) {
+        if(it) "#009688" else "#B5B5B5"
+    }
+    val eraserText = Transformations.map(onEraser) {
+        if(it) "消しゴムON" else "消しゴムOFF"
+    }
+    val eraserTextColor = Transformations.map(backgroundColor) {
+        if(it == colors.dark.code) "#FFFFFF" else "#333333"
+    }
 
     fun getColor(id: Int): String {
         val color = colors.getColorById(id) ?: colors.white
@@ -33,5 +43,9 @@ class MainViewModel @Inject constructor(
     fun onSettingBackground() {
         backgroundColor.postValue(getColor(spf.getBackgroundColor()))
         shownEraser.postValue(spf.getShownEraser())
+    }
+
+    fun onClickEraser() {
+        onEraser.postValue(onEraser.value?.not())
     }
 }
