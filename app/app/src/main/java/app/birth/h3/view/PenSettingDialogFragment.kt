@@ -28,7 +28,6 @@ class PenSettingDialogFragment(val listener: Listener): DialogFragment() {
 
         val dialog = AlertDialog.Builder(activity)
                 .setView(binding.root)
-                .setTitle(R.string.setting_title)
                 .setPositiveButton("OK") { dialogInterface, _ ->
                     viewModel.onComplete()
                     listener.onClickPositive()

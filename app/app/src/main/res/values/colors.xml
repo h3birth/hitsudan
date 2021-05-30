@@ -30,4 +30,7 @@
     <color name="colorBackgroundPink">#FFCDD2</color>
     <color name="colorBackgroundYellow">#FFF9C4</color>
     <color name="colorBackgroundBlue">#BBDEFB</color>
+
+    <!-- text -->
+    <color name="textGrey">#434343</color>
 </resources>
