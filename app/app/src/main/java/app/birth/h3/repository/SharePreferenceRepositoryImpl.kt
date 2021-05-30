@@ -27,4 +27,12 @@ class SharePreferenceRepositoryImpl @Inject constructor(
             commit()
         }
     }
+
+    override fun getBackgroundColor() = spf.getInt(context.getString(R.string.pref_key_background_color), 0)
+    override fun setBackgroundColor(value: Int) {
+        with (spf.edit()) {
+            putInt(context.getString(R.string.pref_key_background_color), value)
+            commit()
+        }
+    }
 }
