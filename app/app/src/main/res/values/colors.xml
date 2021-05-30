@@ -33,4 +33,6 @@
 
     <!-- text -->
     <color name="textGrey">#434343</color>
+    <color name="fabEraserOff">#B5B5B5</color>
+    <color name="fabEraserOn">#009688</color>
 </resources>
