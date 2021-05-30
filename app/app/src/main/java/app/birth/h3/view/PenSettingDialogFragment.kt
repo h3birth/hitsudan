@@ -12,9 +12,12 @@ import app.birth.h3.databinding.DialogPenSetBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PenSettingDialogFragment: DialogFragment() {
+class PenSettingDialogFragment(val listener: Listener): DialogFragment() {
     companion object {
         val TAG = this.javaClass.simpleName
+    }
+    interface Listener {
+        fun onClickPositive()
     }
     private val viewModel: PenSettingViewModel by viewModels()
 
@@ -26,8 +29,10 @@ class PenSettingDialogFragment: DialogFragment() {
         val dialog = AlertDialog.Builder(activity)
                 .setView(binding.root)
                 .setTitle(R.string.setting_title)
-                .setPositiveButton("OK") { dialogInterface, which ->
+                .setPositiveButton("OK") { dialogInterface, _ ->
                     viewModel.onComplete()
+                    listener.onClickPositive()
+                    dialogInterface.dismiss()
                 }
 
         return dialog.create()

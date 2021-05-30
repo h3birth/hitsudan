@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-
+        <variable
+            name="viewModel"
+            type="app.birth.h3.MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,6 +20,7 @@
                 android:id="@+id/paintView"
                 class="app.birth.h3.view.PaintView"
                 id="@+id/view"
+                android:background="@{viewModel.backgroundColor}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

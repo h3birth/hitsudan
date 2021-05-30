@@ -19,7 +19,7 @@ import app.birth.h3.view.PenSettingDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener {
 
     private val viewModel: MainViewModel by viewModels()
     private var binding: ActivityMainBinding? = null
@@ -27,9 +27,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding?.lifecycleOwner = this
+        binding?.viewModel = viewModel
 
         binding?.fabPenSet?.setOnClickListener {_ ->
-            PenSettingDialogFragment().show(supportFragmentManager, PenSettingDialogFragment.TAG)
+            PenSettingDialogFragment(this).show(supportFragmentManager, PenSettingDialogFragment.TAG)
         }
 
         // 削除
@@ -37,5 +39,9 @@ class MainActivity : AppCompatActivity() {
             var paintView : PaintView = findViewById(R.id.paintView)
             paintView.clear()
         }
+    }
+
+    override fun onClickPositive() {
+        viewModel.onSettingBackground()
     }
 }
