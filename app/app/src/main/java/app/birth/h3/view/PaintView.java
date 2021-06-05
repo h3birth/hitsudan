@@ -22,6 +22,8 @@ import app.birth.h3.R;
 import app.birth.h3.model.Color;
 import app.birth.h3.repository.ColorRepository;
 import app.birth.h3.repository.ColorRepositoryImpl;
+import app.birth.h3.repository.SharePreferenceRepository;
+import app.birth.h3.repository.SharePreferenceRepositoryImpl;
 import app.birth.h3.util.UtilCommon;
 
 
@@ -39,7 +41,7 @@ public class PaintView extends View {
     private boolean flg = false;
     private boolean eraser = false;
     private List<Path> eraserPath = new ArrayList<Path>();
-    UtilCommon common;
+    private SharePreferenceRepository spf;
     Map<Integer, Integer> matchNumberCountMap = new HashMap<>();
     TextView textViewResultNumber;
 
@@ -53,7 +55,7 @@ public class PaintView extends View {
     public PaintView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-
+        spf = new SharePreferenceRepositoryImpl(context);
     }
 
     @Override
@@ -97,15 +99,14 @@ public class PaintView extends View {
     }
 
     public void setWeight(){
-        SharedPreferences prefer = context.getSharedPreferences(context.getString(R.string.pref_pen_set), Context.MODE_PRIVATE);
-        current_paint.setStrokeWidth(prefer.getInt(context.getString(R.string.pref_key_pen_weight), 10));
+        current_paint.setStrokeWidth(spf.getPenWeight());
     }
 
     public void setPenColor(){
-        SharedPreferences prefer = context.getSharedPreferences(context.getString(R.string.pref_pen_set), Context.MODE_PRIVATE);
-        Integer current_color_id = prefer.getInt(context.getString(R.string.pref_key_pen_color), 0);
-        Color current_color = color.getColorById(current_color_id);
-        assert current_color != null;
+        Color current_color = color.getColorById(spf.getPenColor());
+        if(current_color == null) {
+            current_color = color.getBlack();
+        }
         current_paint.setColor(android.graphics.Color.parseColor(current_color.getCode()));
     }
 
@@ -133,10 +134,10 @@ public class PaintView extends View {
     }
 
     public void setEraserColor() {
-        SharedPreferences prefer = context.getSharedPreferences(context.getString(R.string.pref_pen_set), Context.MODE_PRIVATE);
-        Integer current_color_id = prefer.getInt(context.getString(R.string.pref_key_background_color), 0);
-        Color current_color = color.getColorById(current_color_id);
-        assert current_color != null;
+        Color current_color = color.getColorById(spf.getBackgroundColor());
+        if(current_color == null) {
+            current_color = color.getWhite();
+        }
         current_paint.setColor(android.graphics.Color.parseColor(current_color.getCode()));
     }
 
