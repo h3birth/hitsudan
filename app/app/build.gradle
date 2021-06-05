@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -16,13 +17,34 @@ android {
         versionName "2.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        debug {
+            storeFile = file('../hitsudan-release.keystore')
+            storePassword = 'hitsudan'
+            keyAlias = 'hitsudan'
+            keyPassword = 'hitsudan'
+        }
+        release {
+            storeFile = file('../hitsudan-release.keystore')
+            storePassword = 'hitsudan'
+            keyAlias = 'hitsudan'
+            keyPassword = 'hitsudan'
+        }
+    }
+
     buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -59,4 +81,8 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.31.2-alpha"
     kapt "com.google.dagger:hilt-android-compiler:2.31.2-alpha"
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
+
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:28.1.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }

@@ -22,6 +22,9 @@ import app.birth.h3.util.UtilCommon
 import app.birth.h3.view.PaintView
 import app.birth.h3.view.PenSettingDialogFragment
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,9 +32,12 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
 
     private val viewModel: MainViewModel by viewModels()
     private var binding: ActivityMainBinding? = null
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalytics = Firebase.analytics
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding?.lifecycleOwner = this
         binding?.viewModel = viewModel
