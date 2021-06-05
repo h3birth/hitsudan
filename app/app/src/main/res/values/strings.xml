@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">ひつだん</string>
     <string name="setting_title">設定</string>
+
+    <string name="default_notification_channel_id">hitstudan_nitification_channel_id</string>
+    <string name="msg_token_fmt">%s</string>
+
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
 

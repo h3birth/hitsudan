@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -21,10 +22,12 @@ import app.birth.h3.databinding.DialogPenSetBinding
 import app.birth.h3.util.UtilCommon
 import app.birth.h3.view.PaintView
 import app.birth.h3.view.PenSettingDialogFragment
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firebaseAnalytics = Firebase.analytics
+        setMessagingToken()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding?.lifecycleOwner = this
@@ -83,5 +87,22 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         binding?.drawerLayout?.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun setMessagingToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(this.javaClass.simpleName, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d(this.javaClass.simpleName, msg)
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
     }
 }
