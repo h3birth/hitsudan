@@ -1,0 +1,8 @@
+.DS_Store
+./firebase-sdk/node_modules
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
