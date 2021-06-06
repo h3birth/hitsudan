@@ -1,5 +1,5 @@
 .DS_Store
-./firebase-sdk/node_modules/
+firebase-sdk/node_modules/
 *.com
 *.class
 *.dll
