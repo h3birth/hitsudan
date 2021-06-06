@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- theme -->
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorFab">#009688</color>
+
+    <!-- pen -->
     <color name="colorPenBlack">#212121</color>
     <color name="colorPenBlue">#2196f3</color>
     <color name="colorPenGreen">#4caf50</color>
@@ -20,4 +23,16 @@
     <color name="colorPenDeepOrange">#FF5722</color>
     <color name="colorPenPeople">#9C27B0</color>
     <color name="colorPenWhite">#ffffff</color>
+
+    <!-- background -->
+    <color name="colorBackgroundWhite">#FFFFFF</color>
+    <color name="colorBackgroundBlack">#404040</color>
+    <color name="colorBackgroundPink">#FFCDD2</color>
+    <color name="colorBackgroundYellow">#FFF9C4</color>
+    <color name="colorBackgroundBlue">#BBDEFB</color>
+
+    <!-- text -->
+    <color name="textGrey">#434343</color>
+    <color name="fabEraserOff">#B5B5B5</color>
+    <color name="fabEraserOn">#009688</color>
 </resources>

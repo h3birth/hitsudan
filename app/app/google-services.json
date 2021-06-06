@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "594271178864",
+    "project_id": "hitsudan-cf359",
+    "storage_bucket": "hitsudan-cf359.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594271178864:android:4f5bd917f5f7bf9dd1a4b5",
+        "android_client_info": {
+          "package_name": "app.birth.h3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594271178864-e43ks2djts5auapohevct0dk1dt4n9jg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.birth.h3",
+            "certificate_hash": "4fb8e60980e70cd1a4e42926207d248386ea465e"
+          }
+        },
+        {
+          "client_id": "594271178864-31c0ei023ck3pasudv20ldkbrd57ep5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwkRD-CMY6h1T6-R8ADllw6yQtx3RL4Xg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594271178864-31c0ei023ck3pasudv20ldkbrd57ep5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

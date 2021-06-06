@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -17,6 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 import app.birth.h3.R;
+import app.birth.h3.model.Color;
+import app.birth.h3.repository.ColorRepository;
+import app.birth.h3.repository.ColorRepositoryImpl;
+import app.birth.h3.repository.SharePreferenceRepository;
+import app.birth.h3.repository.SharePreferenceRepositoryImpl;
 import app.birth.h3.util.UtilCommon;
 
 
@@ -30,8 +37,11 @@ public class PaintView extends View {
     private Path current_path;
     private List<Path> listPath = new ArrayList<Path>();
     private List<Paint> listPaint = new ArrayList<Paint>();
+    private ColorRepository color = new ColorRepositoryImpl();
     private boolean flg = false;
-    UtilCommon common;
+    private boolean eraser = false;
+    private List<Path> eraserPath = new ArrayList<Path>();
+    private SharePreferenceRepository spf;
     Map<Integer, Integer> matchNumberCountMap = new HashMap<>();
     TextView textViewResultNumber;
 
@@ -45,7 +55,7 @@ public class PaintView extends View {
     public PaintView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-
+        spf = new SharePreferenceRepositoryImpl(context);
     }
 
     @Override
@@ -89,49 +99,19 @@ public class PaintView extends View {
     }
 
     public void setWeight(){
-        SharedPreferences prefer = context.getSharedPreferences(context.getString(R.string.pref_pen_set), Context.MODE_PRIVATE);
-        current_paint.setStrokeWidth(prefer.getInt(context.getString(R.string.pref_key_pen_weight), 10));
+        current_paint.setStrokeWidth(spf.getPenWeight());
     }
 
-    public void setColor(){
-        SharedPreferences prefer = context.getSharedPreferences(context.getString(R.string.pref_pen_set), Context.MODE_PRIVATE);
-        Integer current_color = prefer.getInt(context.getString(R.string.pref_key_pen_color), 0);
-        if( current_color == 0 ){ // くろ
-            current_paint.setColor(getResources().getColor(R.color.colorPenBlack));
-        }else if( current_color == 1 ){ // 青
-            current_paint.setColor(getResources().getColor(R.color.colorPenBlue));
-        }else if( current_color == 2 ){ // みどり
-            current_paint.setColor(getResources().getColor(R.color.colorPenGreen));
-        }else if( current_color == 3 ){ // オレンジ
-            current_paint.setColor(getResources().getColor(R.color.colorPenOrange));
-        }else if( current_color == 4 ){ // 赤
-            current_paint.setColor(getResources().getColor(R.color.colorPenRed));
-        }else if( current_color == 5 ){ // 茶色
-            current_paint.setColor(getResources().getColor(R.color.colorPenBrawn));
-        }else if( current_color == 6 ){ // シアン
-            current_paint.setColor(getResources().getColor(R.color.colorPenCyan));
-        }else if( current_color == 7 ){ // テール
-            current_paint.setColor(getResources().getColor(R.color.colorPenTeal));
-        }else if( current_color == 8 ){ // 黄色
-            current_paint.setColor(getResources().getColor(R.color.colorPenYellow));
-        }else if( current_color == 9 ){ // ピンク
-            current_paint.setColor(getResources().getColor(R.color.colorPenPink));
-        }else if( current_color == 10 ){ // グレイ
-            current_paint.setColor(getResources().getColor(R.color.colorPenGrey));
-        }else if( current_color == 11 ){ // インディゴ
-            current_paint.setColor(getResources().getColor(R.color.colorPenIndigo));
-        }else if( current_color == 12 ){ // ライム
-            current_paint.setColor(getResources().getColor(R.color.colorPenLime));
-        }else if( current_color == 13 ){ // ディープオレンジ
-            current_paint.setColor(getResources().getColor(R.color.colorPenDeepOrange));
-        }else if( current_color == 14 ){ // 紫
-            current_paint.setColor(getResources().getColor(R.color.colorPenPeople));
+    public void setPenColor(){
+        Color current_color = color.getColorById(spf.getPenColor());
+        if(current_color == null) {
+            current_color = color.getBlack();
         }
+        current_paint.setColor(android.graphics.Color.parseColor(current_color.getCode()));
     }
 
     public void setPen(){
         current_paint = new Paint();
-//        current_paint.setColor(getResources().getColor(R.color.colorFab));
         setColor();
         current_paint.setStyle(Paint.Style.STROKE);
         current_paint.setStrokeJoin(Paint.Join.ROUND);
@@ -147,5 +127,25 @@ public class PaintView extends View {
         listPath.clear();
         listPaint.clear();
         invalidate();
+    }
+
+    public void setEraser(boolean isEraser) {
+        eraser = isEraser;
+    }
+
+    public void setEraserColor() {
+        Color current_color = color.getColorById(spf.getBackgroundColor());
+        if(current_color == null) {
+            current_color = color.getWhite();
+        }
+        current_paint.setColor(android.graphics.Color.parseColor(current_color.getCode()));
+    }
+
+    public void setColor() {
+        if(eraser) {
+            setEraserColor();
+        } else {
+            setPenColor();
+        }
     }
 }

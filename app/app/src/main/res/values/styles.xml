@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="PenSettingLabel" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="PenSettingOption" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
 </resources>
