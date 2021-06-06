@@ -1,5 +1,7 @@
 package app.birth.h3.module
 
+import app.birth.h3.repository.AnalyticsRepository
+import app.birth.h3.repository.AnalyticsRepositoryImpl
 import app.birth.h3.repository.ColorRepository
 import app.birth.h3.repository.ColorRepositoryImpl
 import app.birth.h3.repository.SharePreferenceRepository
@@ -21,4 +23,8 @@ abstract class RepositoryModule {
     @Binds
     @ViewModelScoped
     abstract fun bindDataRepository(impl: ColorRepositoryImpl): ColorRepository
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindAnalyticsRepository(impl: AnalyticsRepositoryImpl): AnalyticsRepository
 }

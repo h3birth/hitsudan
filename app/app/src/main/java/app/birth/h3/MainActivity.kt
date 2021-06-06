@@ -35,12 +35,11 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
 
     private val viewModel: MainViewModel by viewModels()
     private var binding: ActivityMainBinding? = null
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firebaseAnalytics = Firebase.analytics
         setMessagingToken()
+        this.lifecycle.addObserver(viewModel)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding?.lifecycleOwner = this

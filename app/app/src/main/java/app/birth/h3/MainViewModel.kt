@@ -9,6 +9,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import app.birth.h3.model.Color
+import app.birth.h3.repository.AnalyticsRepository
 import app.birth.h3.repository.ColorRepository
 import app.birth.h3.repository.SharePreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
         val spf: SharePreferenceRepository,
-        val colors: ColorRepository
-) : ViewModel() {
+        val colors: ColorRepository,
+        val analytics: AnalyticsRepository
+) : ViewModel(), LifecycleObserver {
     val backgroundColor = MutableLiveData(getColor(spf.getBackgroundColor()))
     private val shownEraser = MutableLiveData(spf.getShownEraser())
     val eraserButtonVisibility = Transformations.map(shownEraser) {
@@ -47,5 +49,11 @@ class MainViewModel @Inject constructor(
 
     fun onClickEraser() {
         onEraser.postValue(onEraser.value?.not())
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onCreate() {
+        Log.i(this.javaClass.simpleName, "onCreate")
+        analytics.initialize()
     }
 }
