@@ -44,6 +44,8 @@ public class PaintView extends View {
     private Paint eraserPaint;
     private List<Path> listEraserPath = new ArrayList<Path>();
     private List<Paint> listEraserPaint = new ArrayList<Paint>();
+    private List<Path> zIndexPath = new ArrayList<Path>();
+    private List<Paint> zIndexPaint = new ArrayList<Paint>();
     private SharePreferenceRepository spf;
 
     public PaintView(Context context) {
@@ -59,22 +61,19 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         // Pen
-        for (int i = 0; i < listPath.size(); i++) {
-            Path pt = listPath.get(i);
-            Paint paint = listPaint.get(i);
+        for (int i = 0; i < zIndexPath.size(); i++) {
+            Path pt = zIndexPath.get(i);
+            Paint paint = zIndexPaint.get(i);
             canvas.drawPath(pt, paint);
         }
-        // 消しゴム
-        for (int i = 0; i < listEraserPath.size(); i++) {
-            Path pt = listEraserPath.get(i);
-            Paint paint = listEraserPaint.get(i);
-            canvas.drawPath(pt, paint);
-        }
-        if (current_path != null && current_paint != null) {
-            canvas.drawPath(current_path, current_paint);
-        }
-        if (eraserPath != null && eraserPaint != null) {
-            canvas.drawPath(eraserPath, eraserPaint);
+        if(eraser) {
+            if (eraserPath != null && eraserPaint != null) {
+                canvas.drawPath(eraserPath, eraserPaint);
+            }
+        } else {
+            if (current_path != null && current_paint != null) {
+                canvas.drawPath(current_path, current_paint);
+            }
         }
     }
 
@@ -108,9 +107,13 @@ public class PaintView extends View {
         if(eraser) {
             listEraserPath.add(eraserPath);
             listEraserPaint.add(eraserPaint);
+            zIndexPath.add(eraserPath);
+            zIndexPaint.add(eraserPaint);
         } else {
             listPath.add(current_path);
             listPaint.add(current_paint);
+            zIndexPath.add(current_path);
+            zIndexPaint.add(current_paint);
         }
     }
 
@@ -173,8 +176,14 @@ public class PaintView extends View {
             Path pt = listPath.get(i);
             pt.reset();
         }
+        for (int i = 0; i < listEraserPath.size(); i++) {
+            Path pt = listEraserPath.get(i);
+            pt.reset();
+        }
         listPath.clear();
         listPaint.clear();
+        listEraserPath.clear();
+        listEraserPaint.clear();
         invalidate();
     }
 
@@ -196,5 +205,14 @@ public class PaintView extends View {
         } else {
             setPenColor();
         }
+    }
+
+    public void changeEraserColor(String colorCode) {
+        // 消しゴム
+        for (int i = 0; i < listEraserPaint.size(); i++) {
+            Paint paint = listEraserPaint.get(i);
+            paint.setColor(android.graphics.Color.parseColor(colorCode));
+        }
+//        invalidate();
     }
 }
