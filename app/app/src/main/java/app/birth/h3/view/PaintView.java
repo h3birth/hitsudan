@@ -45,11 +45,6 @@ public class PaintView extends View {
     private List<Path> listEraserPath = new ArrayList<Path>();
     private List<Paint> listEraserPaint = new ArrayList<Paint>();
     private SharePreferenceRepository spf;
-    Map<Integer, Integer> matchNumberCountMap = new HashMap<>();
-    TextView textViewResultNumber;
-
-    /** スレッドUI操作用ハンドラ */
-    private Handler mHandler = new Handler();
 
     public PaintView(Context context) {
         this(context, null);
