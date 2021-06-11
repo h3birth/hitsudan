@@ -40,7 +40,10 @@ public class PaintView extends View {
     private ColorRepository color = new ColorRepositoryImpl();
     private boolean flg = false;
     private boolean eraser = false;
-    private List<Path> eraserPath = new ArrayList<Path>();
+    private Path eraserPath;
+    private Paint eraserPaint;
+    private List<Path> listEraserPath = new ArrayList<Path>();
+    private List<Paint> listEraserPaint = new ArrayList<Paint>();
     private SharePreferenceRepository spf;
     Map<Integer, Integer> matchNumberCountMap = new HashMap<>();
     TextView textViewResultNumber;
@@ -60,15 +63,59 @@ public class PaintView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // TODO 自動生成されたメソッド・スタブ
+        // Pen
         for (int i = 0; i < listPath.size(); i++) {
             Path pt = listPath.get(i);
             Paint paint = listPaint.get(i);
             canvas.drawPath(pt, paint);
         }
-        // current
+        // 消しゴム
+        for (int i = 0; i < listEraserPath.size(); i++) {
+            Path pt = listEraserPath.get(i);
+            Paint paint = listEraserPaint.get(i);
+            canvas.drawPath(pt, paint);
+        }
         if (current_path != null && current_paint != null) {
             canvas.drawPath(current_path, current_paint);
+        }
+        if (eraserPath != null && eraserPaint != null) {
+            canvas.drawPath(eraserPath, eraserPaint);
+        }
+    }
+
+    private void initilize() {
+        if(eraser) {
+            eraserPath = new Path();
+            eraserPaint = new Paint();
+        } else {
+            current_path = new Path();
+            current_paint = new Paint();
+        }
+    }
+
+    private void moveTo(float x, float y) {
+        if(eraser) {
+            eraserPath.moveTo(x, y);
+        } else {
+            current_path.moveTo(x, y);
+        }
+    }
+
+    private void lineTo(float x, float y) {
+        if(eraser) {
+            eraserPath.lineTo(x, y);
+        } else {
+            current_path.lineTo(x, y);
+        }
+    }
+
+    private void addList() {
+        if(eraser) {
+            listEraserPath.add(eraserPath);
+            listEraserPaint.add(eraserPaint);
+        } else {
+            listPath.add(current_path);
+            listPaint.add(current_paint);
         }
     }
 
@@ -78,20 +125,18 @@ public class PaintView extends View {
         float y = event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                current_path = new Path();
-                current_paint = new Paint();
+                initilize();
                 setPen();
-                current_path.moveTo(x, y);
+                moveTo(x, y);
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
-                current_path.lineTo(x, y);
+                lineTo(x, y);
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
-                current_path.lineTo(x, y);
-                listPath.add(current_path);
-                listPaint.add(current_paint);
+                lineTo(x, y);
+                addList();
                 invalidate();
                 break;
         }
@@ -99,7 +144,11 @@ public class PaintView extends View {
     }
 
     public void setWeight(){
-        current_paint.setStrokeWidth(spf.getPenWeight());
+        if(eraser) {
+            eraserPaint.setStrokeWidth(spf.getPenWeight());
+        } else {
+            current_paint.setStrokeWidth(spf.getPenWeight());
+        }
     }
 
     public void setPenColor(){
@@ -111,11 +160,16 @@ public class PaintView extends View {
     }
 
     public void setPen(){
-        current_paint = new Paint();
         setColor();
-        current_paint.setStyle(Paint.Style.STROKE);
-        current_paint.setStrokeJoin(Paint.Join.ROUND);
-        current_paint.setStrokeCap(Paint.Cap.ROUND);
+        if(eraser) {
+            eraserPaint.setStyle(Paint.Style.STROKE);
+            eraserPaint.setStrokeJoin(Paint.Join.ROUND);
+            eraserPaint.setStrokeCap(Paint.Cap.ROUND);
+        } else {
+            current_paint.setStyle(Paint.Style.STROKE);
+            current_paint.setStrokeJoin(Paint.Join.ROUND);
+            current_paint.setStrokeCap(Paint.Cap.ROUND);
+        }
         setWeight();
     }
 
@@ -138,7 +192,7 @@ public class PaintView extends View {
         if(current_color == null) {
             current_color = color.getWhite();
         }
-        current_paint.setColor(android.graphics.Color.parseColor(current_color.getCode()));
+        eraserPaint.setColor(android.graphics.Color.parseColor(current_color.getCode()));
     }
 
     public void setColor() {
