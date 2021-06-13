@@ -77,6 +77,9 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
             var paintView : PaintView = findViewById(R.id.paintView)
             paintView.setEraser(it)
         })
+        viewModel.shownEraser.observe(this, Observer {
+            if(it == false) viewModel.onEraser.postValue(false)
+        })
 
         viewModel.backgroundColor.observe(this, Observer {
             Log.d(this.javaClass.simpleName, "background color $it")

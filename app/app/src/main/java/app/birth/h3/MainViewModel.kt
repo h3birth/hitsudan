@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
         val analytics: AnalyticsRepository
 ) : ViewModel(), LifecycleObserver {
     val backgroundColor = MutableLiveData(getColor(spf.getBackgroundColor()))
-    private val shownEraser = MutableLiveData(spf.getShownEraser())
+    val shownEraser = MutableLiveData(spf.getShownEraser())
     val eraserButtonVisibility = Transformations.map(shownEraser) {
         if(it) View.VISIBLE else View.GONE
     }
