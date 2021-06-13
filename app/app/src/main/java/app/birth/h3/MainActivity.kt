@@ -1,5 +1,8 @@
 package app.birth.h3
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -7,6 +10,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.Toast
@@ -19,6 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import app.birth.h3.databinding.ActivityMainBinding
 import app.birth.h3.databinding.DialogPenSetBinding
+import app.birth.h3.util.BottomToolbarMode
 import app.birth.h3.util.UtilCommon
 import app.birth.h3.view.PaintView
 import app.birth.h3.view.PenSettingDialogFragment
@@ -35,6 +40,7 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
 
     private val viewModel: MainViewModel by viewModels()
     private var binding: ActivityMainBinding? = null
+    private var animator: ObjectAnimator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +77,10 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
 
         binding?.fabDrawer?.setOnClickListener {
             binding?.drawerLayout?.open()
+        }
+
+        binding?.toolbarTabTemp?.setOnClickListener {
+            animationBottomToolbar(viewModel.bottomToolbarMode.value == BottomToolbarMode.Close)
         }
 
         viewModel.onEraser.observe(this, Observer {
@@ -110,7 +120,48 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
             // Log and toast
             val msg = getString(R.string.msg_token_fmt, token)
             Log.d(this.javaClass.simpleName, msg)
-            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        animator?.cancel()
+        animator?.removeAllListeners()
+    }
+
+    private fun animationBottomToolbar(isShow: Boolean) {
+        if (animator != null || animator?.isRunning == true) return
+
+        binding?.toolbarWrap?.let {
+            animator = setAnimationProperties(it, isShow)
+            animator?.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(animation: Animator?) {}
+
+                override fun onAnimationEnd(animation: Animator?) {
+                    animator = null
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {
+                    animator?.cancel()
+                    animator = null
+                }
+
+                override fun onAnimationStart(animation: Animator?) {
+                    viewModel.onClickBottomToolbar()
+                }
+            })
+            animator?.start()
+        }
+    }
+
+    private fun setAnimationProperties(target: View, isShow: Boolean): ObjectAnimator {
+        val fromY = if (isShow) 100f else 0f
+        val toY = if (isShow) 0f else 0f
+
+        val translateY = PropertyValuesHolder.ofFloat("translationY", fromY, toY)
+        return ObjectAnimator.ofPropertyValuesHolder(target, translateY).apply {
+            duration = 300
+        }
     }
 }

@@ -12,6 +12,7 @@ import app.birth.h3.model.Color
 import app.birth.h3.repository.AnalyticsRepository
 import app.birth.h3.repository.ColorRepository
 import app.birth.h3.repository.SharePreferenceRepository
+import app.birth.h3.util.BottomToolbarMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -37,6 +38,16 @@ class MainViewModel @Inject constructor(
         if(it == colors.dark.code) "#FFFFFF" else "#333333"
     }
 
+    val bottomToolbarMode = MutableLiveData(BottomToolbarMode.Close)
+    val toolbarTabRotation = Transformations.map(bottomToolbarMode) { when(it){
+        BottomToolbarMode.Open -> 180
+        else -> 0
+    } }
+    val toolbarBottomVisibility =  Transformations.map(bottomToolbarMode) { when(it){
+        BottomToolbarMode.Open -> View.VISIBLE
+        else -> View.GONE
+    } }
+
     fun getColor(id: Int): String {
         val color = colors.getColorById(id) ?: colors.white
         return color.code
@@ -49,6 +60,13 @@ class MainViewModel @Inject constructor(
 
     fun onClickEraser() {
         onEraser.postValue(onEraser.value?.not())
+    }
+
+    fun onClickBottomToolbar() {
+        when(bottomToolbarMode.value) {
+            BottomToolbarMode.Open -> bottomToolbarMode.postValue(BottomToolbarMode.Close)
+            BottomToolbarMode.Close -> bottomToolbarMode.postValue(BottomToolbarMode.Open)
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)

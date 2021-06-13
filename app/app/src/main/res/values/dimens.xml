@@ -7,4 +7,6 @@
 
     <dimen name="margin_m">8dp</dimen>
     <dimen name="margin_l">16dp</dimen>
+
+    <dimen name="toolbar_icon_size">50dp</dimen>
 </resources>
