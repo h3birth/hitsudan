@@ -2,9 +2,11 @@ package app.birth.h3.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.os.Handler;
@@ -24,6 +26,7 @@ import app.birth.h3.repository.ColorRepository;
 import app.birth.h3.repository.ColorRepositoryImpl;
 import app.birth.h3.repository.SharePreferenceRepository;
 import app.birth.h3.repository.SharePreferenceRepositoryImpl;
+import app.birth.h3.util.ScreenUtil;
 import app.birth.h3.util.UtilCommon;
 
 
