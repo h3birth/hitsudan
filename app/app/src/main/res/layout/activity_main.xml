@@ -124,6 +124,9 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:rotation="@{viewModel.toolbarTabRotation}"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         android:src="@drawable/ic_baseline_keyboard_arrow_up_24" />
 
                 </LinearLayout>
@@ -134,8 +137,8 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/margin_m"
                     android:paddingBottom="@dimen/margin_m"
-                    android:paddingStart="@dimen/margin_l"
-                    android:paddingEnd="@dimen/margin_l"
+                    android:paddingStart="@dimen/margin_2l"
+                    android:paddingEnd="@dimen/margin_2l"
                     android:background="@drawable/button_toolbar_background"
                     android:visibility="@{viewModel.toolbarBottomVisibility, default=gone}">
 
@@ -145,6 +148,9 @@
                         android:layout_height="@dimen/toolbar_icon_size"
                         android:padding="@dimen/margin_m"
                         android:src="@drawable/ic_eraser"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -154,6 +160,9 @@
                         android:layout_height="wrap_content"
                         android:text="消しゴム"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="@id/eraser"
                         app:layout_constraintEnd_toEndOf="@id/eraser"
                         app:layout_constraintTop_toBottomOf="@id/eraser"/>
@@ -165,7 +174,10 @@
                         android:padding="@dimen/margin_m"
                         android:src="@drawable/ic_baseline_file_download_24"
                         android:tint="@color/colorPenBlack"
-                        android:layout_marginStart="@dimen/margin_l"
+                        android:layout_marginStart="@dimen/margin_3l"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         app:layout_constraintTop_toTopOf="@id/eraser"
                         app:layout_constraintBottom_toBottomOf="@id/eraser"
                         app:layout_constraintStart_toEndOf="@id/eraser" />
@@ -176,6 +188,9 @@
                         android:layout_height="wrap_content"
                         android:text="画像保存"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="@id/save"
                         app:layout_constraintEnd_toEndOf="@id/save"
                         app:layout_constraintTop_toBottomOf="@id/save"/>
