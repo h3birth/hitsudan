@@ -26,6 +26,7 @@ import app.birth.h3.util.FileUtil
 import app.birth.h3.util.ScreenUtil
 import app.birth.h3.view.PaintView
 import app.birth.h3.view.PenSettingDialogFragment
+import app.birth.h3.view.SaveConfirmDialogFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
@@ -133,7 +134,9 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
         var paintView : PaintView = findViewById(R.id.paintView)
         paintView.draw(canvas)
 
-        fileUtil.saveFile(mBitmap)
+        SaveConfirmDialogFragment(mBitmap).show(supportFragmentManager, SaveConfirmDialogFragment.TAG)
+
+//        fileUtil.saveFile(mBitmap)
     }
 
     override fun onClickPositive() {
