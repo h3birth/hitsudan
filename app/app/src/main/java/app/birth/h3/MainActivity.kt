@@ -33,7 +33,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, SaveConfirmDialogFragment.Listener, NavigationView.OnNavigationItemSelectedListener {
 
     private val viewModel: MainViewModel by viewModels()
     private var binding: ActivityMainBinding? = null
@@ -134,9 +134,7 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
         var paintView : PaintView = findViewById(R.id.paintView)
         paintView.draw(canvas)
 
-        SaveConfirmDialogFragment(mBitmap).show(supportFragmentManager, SaveConfirmDialogFragment.TAG)
-
-//        fileUtil.saveFile(mBitmap)
+        SaveConfirmDialogFragment(this, mBitmap).show(supportFragmentManager, SaveConfirmDialogFragment.TAG)
     }
 
     override fun onClickPositive() {
@@ -204,5 +202,13 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Nav
         return ObjectAnimator.ofPropertyValuesHolder(target, translateY).apply {
             duration = 300
         }
+    }
+
+    override fun onSave(bitmap: Bitmap) {
+        fileUtil.saveFile(bitmap, onSuccess = {
+            Toast.makeText(this, "ファイル保存しました", Toast.LENGTH_SHORT).show()
+        }, onFailed = {
+            Toast.makeText(this, "ファイル保存に失敗しました。アクセス権限を確認してください。", Toast.LENGTH_SHORT).show()
+        })
     }
 }

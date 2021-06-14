@@ -10,6 +10,7 @@ import android.widget.Toast
 import app.birth.h3.R
 import java.io.File
 import java.io.FileOutputStream
+import java.lang.Exception
 
 class FileUtil(val context: Context) {
     companion object {
@@ -23,14 +24,16 @@ class FileUtil(val context: Context) {
         return dirPath
     }
 
+    fun appDirectory() = "${context.resources.getString(R.string.app_name)}"
+
     fun newFileName() = "${System.currentTimeMillis()}.png"
 
-    fun saveFile(bitmap: Bitmap) {
+    fun saveFile(bitmap: Bitmap, onSuccess: () -> Unit, onFailed: (e: Exception) -> Unit) {
         val fileName = newFileName()
         try {
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val values = ContentValues().apply {
+                    put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/" + appDirectory())
                     put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
                     put(MediaStore.Images.Media.MIME_TYPE, "image/png")
                     put(MediaStore.Images.Media.IS_PENDING, 1)
@@ -52,8 +55,9 @@ class FileUtil(val context: Context) {
                 val file = File(mkdirAppDirectory(), fileName)
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
             }
+            onSuccess()
         } catch (e: FileSystemException) {
-            Toast.makeText(context, "ファイル保存に失敗しました。アクセス権限を確認してください。", Toast.LENGTH_SHORT).show()
+            onFailed(e)
         }
     }
 }

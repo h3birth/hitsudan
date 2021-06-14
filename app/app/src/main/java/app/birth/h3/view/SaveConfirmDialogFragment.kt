@@ -12,16 +12,24 @@ import androidx.fragment.app.DialogFragment
 import app.birth.h3.R
 import app.birth.h3.databinding.FragmentSaveConfirmDialogBinding
 
-class SaveConfirmDialogFragment(val bitmap: Bitmap) : DialogFragment() {
+class SaveConfirmDialogFragment(val lister: Listener, val bitmap: Bitmap) : DialogFragment() {
     companion object {
         val TAG = this.javaClass.simpleName
     }
+
+    interface Listener {
+        fun onSave(bitmap: Bitmap)
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = FragmentSaveConfirmDialogBinding.inflate(LayoutInflater.from(activity), null, false)
         binding.lifecycleOwner = this
         binding.bitmap = bitmap
 
-
+        binding.save.setOnClickListener {
+            lister.onSave(bitmap)
+            this.dismiss()
+        }
         binding.cancel.setOnClickListener {
             this.dismiss()
         }
