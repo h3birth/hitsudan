@@ -3,14 +3,18 @@ package app.birth.h3.util
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.core.content.FileProvider
+import app.birth.h3.BuildConfig
 import app.birth.h3.R
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
+import java.net.URI
 
 class FileUtil(val context: Context) {
     companion object {
@@ -28,8 +32,9 @@ class FileUtil(val context: Context) {
 
     fun newFileName() = "${System.currentTimeMillis()}.png"
 
-    fun saveFile(bitmap: Bitmap, onSuccess: () -> Unit, onFailed: (e: Exception) -> Unit) {
+    fun saveFile(bitmap: Bitmap, onSuccess: (uri: Uri?) -> Unit, onFailed: (e: Exception) -> Unit) {
         val fileName = newFileName()
+        var uri: Uri? = null
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val values = ContentValues().apply {
@@ -51,11 +56,15 @@ class FileUtil(val context: Context) {
                 values.clear()
                 values.put(MediaStore.Images.Media.IS_PENDING, 0)
                 context.contentResolver.update(item, values, null, null)
+
+                uri = item
             } else {
                 val file = File(mkdirAppDirectory(), fileName)
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(file))
+
+                uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file)
             }
-            onSuccess()
+            onSuccess(uri)
         } catch (e: FileSystemException) {
             onFailed(e)
         }

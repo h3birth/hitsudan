@@ -4,6 +4,7 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -95,6 +96,14 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
             }
         }
 
+        binding?.share?.setOnClickListener {
+            if (allPermissionsGranted()) {
+                sharePNG()
+            } else {
+                this.requestPermissions(REQUIRED_PERMISSIONS, REQUEST_EXTERNAL_STORAGE)
+            }
+        }
+
         viewModel.onEraser.observe(this, Observer {
             var paintView : PaintView = findViewById(R.id.paintView)
             paintView.setEraser(it)
@@ -124,7 +133,21 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
             }
     }
 
-    private fun savePNG() {
+    private fun sharePNG() {
+        fileUtil.saveFile(createBitmap(), onSuccess = {
+            if(it == null) return@saveFile Toast.makeText(this, "ファイル保存に失敗しました。アクセス権限を確認してください。", Toast.LENGTH_SHORT).show()
+
+            val share = Intent(Intent.ACTION_SEND)
+            share.type = "image/png"
+
+            share.putExtra(Intent.EXTRA_STREAM, it)
+            startActivity(Intent.createChooser(share, "Share Image"))
+        }, onFailed = {
+            Toast.makeText(this, "ファイル保存に失敗しました。アクセス権限を確認してください。", Toast.LENGTH_SHORT).show()
+        })
+    }
+
+    private fun createBitmap(): Bitmap {
         val screenUtil = ScreenUtil(this)
         val screenSize = screenUtil.getScreenSize()
 
@@ -134,6 +157,11 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
         var paintView : PaintView = findViewById(R.id.paintView)
         paintView.draw(canvas)
 
+        return mBitmap
+    }
+
+    private fun savePNG() {
+        val mBitmap = createBitmap()
         SaveConfirmDialogFragment(this, mBitmap).show(supportFragmentManager, SaveConfirmDialogFragment.TAG)
     }
 
