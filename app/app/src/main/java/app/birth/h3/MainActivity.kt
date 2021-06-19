@@ -4,6 +4,7 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -16,9 +17,15 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.CameraX
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageProxy
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import app.birth.h3.databinding.ActivityMainBinding
@@ -31,7 +38,14 @@ import app.birth.h3.view.SaveConfirmDialogFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizerOptions
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
+import timber.log.Timber
+import java.lang.Exception
+import java.util.concurrent.Executors
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, SaveConfirmDialogFragment.Listener, NavigationView.OnNavigationItemSelectedListener {
@@ -42,10 +56,12 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
     private var animator: ObjectAnimator? = null
 
     private val REQUEST_EXTERNAL_STORAGE = 1
-    private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val REQUEST_CAMERA = 2
+    private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
 
     private lateinit var fileUtil: FileUtil
 
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setMessagingToken()
@@ -106,8 +122,29 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
         }
 
         binding?.sperk?.setOnClickListener {
-            premiumViewModel.ttsInitilize()
-            premiumViewModel.queueSperk("こんにちは")
+            if (allPermissionsGranted()) {
+                val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+                val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+                val imageAnalysis = ImageAnalysis.Builder()
+                        .build()
+                        .also {
+                            it.setAnalyzer(Executors.newSingleThreadExecutor(), MyImageAnalyzer(createBitmap(), {
+                                if (it.isNullOrBlank()) {
+                                    Toast.makeText(this, "認識可能な文字が見つかりませんでした", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    premiumViewModel.ttsInitilize()
+                                    premiumViewModel.queueSperk(it)
+                                }
+                                cameraProvider.shutdown()
+                            }, {
+                                Toast.makeText(this, "画像解析に失敗しました", Toast.LENGTH_SHORT).show()
+                                cameraProvider.shutdown()
+                            }))
+                        }
+                cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, imageAnalysis)
+            } else {
+                this.requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CAMERA)
+            }
         }
 
         viewModel.onEraser.observe(this, Observer {
@@ -133,6 +170,14 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
         if (requestCode == REQUEST_EXTERNAL_STORAGE)
             if (allPermissionsGranted()) {
                 savePNG()
+            } else {
+                // パーミッション許可されなかった時、前の画面に戻す
+                Toast.makeText(this, "アプリ設定からカメラとストレージの権限を許可してください。", Toast.LENGTH_SHORT).show()
+            }
+
+        if (requestCode == REQUEST_CAMERA)
+            if (allPermissionsGranted()) {
+                Toast.makeText(this, "カメラのパーミッションを許可しました", Toast.LENGTH_SHORT).show()
             } else {
                 // パーミッション許可されなかった時、前の画面に戻す
                 Toast.makeText(this, "アプリ設定からカメラとストレージの権限を許可してください。", Toast.LENGTH_SHORT).show()
@@ -244,5 +289,32 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
         }, onFailed = {
             Toast.makeText(this, "ファイル保存に失敗しました。アクセス権限を確認してください。", Toast.LENGTH_SHORT).show()
         })
+    }
+
+
+    private class MyImageAnalyzer(val bitmap: Bitmap, var onSuccess: (String) -> Unit, val onFailed: (Exception) -> Unit) : ImageAnalysis.Analyzer {
+
+        @SuppressLint("UnsafeOptInUsageError")
+        override fun analyze(imageProxy: ImageProxy) {
+            Timber.d("start analyze")
+            val mediaImage = imageProxy.image
+            if (mediaImage != null) {
+                val image = InputImage.fromBitmap(bitmap, 0)
+                // Pass image to an ML Kit Vision API
+                val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+                val result = recognizer.process(image)
+                        .addOnSuccessListener { visionText ->
+                            // Task completed successfully
+                            Timber.d("vision = ${visionText.text}")
+                            onSuccess(visionText.text)
+                            imageProxy.close()
+                        }
+                        .addOnFailureListener { e ->
+                            Timber.e(e)
+                            onFailed(e)
+                            imageProxy.close()
+                        }
+            }
+        }
     }
 }
