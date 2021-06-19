@@ -6,6 +6,8 @@ import app.birth.h3.repository.ColorRepository
 import app.birth.h3.repository.ColorRepositoryImpl
 import app.birth.h3.repository.SharePreferenceRepository
 import app.birth.h3.repository.SharePreferenceRepositoryImpl
+import app.birth.h3.repository.TextToSpeechRepository
+import app.birth.h3.repository.TextToSpeechRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -27,4 +29,8 @@ abstract class RepositoryModule {
     @Binds
     @ViewModelScoped
     abstract fun bindAnalyticsRepository(impl: AnalyticsRepositoryImpl): AnalyticsRepository
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindTextToSpeechRepository(impl: TextToSpeechRepositoryImpl): TextToSpeechRepository
 }

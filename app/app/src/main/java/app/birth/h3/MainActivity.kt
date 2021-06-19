@@ -37,6 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, SaveConfirmDialogFragment.Listener, NavigationView.OnNavigationItemSelectedListener {
 
     private val viewModel: MainViewModel by viewModels()
+    private val premiumViewModel: PremiumViewModel by viewModels()
     private var binding: ActivityMainBinding? = null
     private var animator: ObjectAnimator? = null
 
@@ -102,6 +103,11 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
             } else {
                 this.requestPermissions(REQUIRED_PERMISSIONS, REQUEST_EXTERNAL_STORAGE)
             }
+        }
+
+        binding?.sperk?.setOnClickListener {
+            premiumViewModel.ttsInitilize()
+            premiumViewModel.queueSperk("こんにちは")
         }
 
         viewModel.onEraser.observe(this, Observer {

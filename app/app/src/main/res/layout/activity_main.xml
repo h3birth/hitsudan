@@ -223,6 +223,34 @@
                         app:layout_constraintStart_toStartOf="@id/share"
                         app:layout_constraintEnd_toEndOf="@id/share"
                         app:layout_constraintTop_toBottomOf="@id/share"/>
+
+                    <ImageView
+                        android:id="@+id/sperk"
+                        android:layout_width="@dimen/toolbar_icon_size"
+                        android:layout_height="@dimen/toolbar_icon_size"
+                        android:padding="@dimen/margin_m"
+                        android:src="@drawable/ic_baseline_keyboard_voice_24"
+                        android:tint="@color/colorPenBlack"
+                        android:layout_marginStart="@dimen/margin_3l"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:layout_constraintTop_toTopOf="@id/eraser"
+                        app:layout_constraintBottom_toBottomOf="@id/eraser"
+                        app:layout_constraintStart_toEndOf="@id/share" />
+
+                    <TextView
+                        android:id="@+id/sperk_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="音声再生"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:layout_constraintStart_toStartOf="@id/sperk"
+                        app:layout_constraintEnd_toEndOf="@id/sperk"
+                        app:layout_constraintTop_toBottomOf="@id/sperk"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </FrameLayout>
