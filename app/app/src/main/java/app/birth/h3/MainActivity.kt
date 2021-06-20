@@ -45,10 +45,8 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizerOptions
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
 import timber.log.Timber
-import java.lang.Exception
-import java.util.concurrent.Executors
+import kotlin.Exception
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, SaveConfirmDialogFragment.Listener, NavigationView.OnNavigationItemSelectedListener {
@@ -127,29 +125,47 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
         }
 
         binding?.sperk?.setOnClickListener {
-            if (allPermissionsGranted()) {
-                val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-                val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-                val imageAnalysis = ImageAnalysis.Builder()
-                        .build()
-                        .also {
-                            it.setAnalyzer(Executors.newSingleThreadExecutor(), MyImageAnalyzer(createBitmap(), {
-                                if (it.isNullOrBlank()) {
-                                    Toast.makeText(this, "認識可能な文字が見つかりませんでした", Toast.LENGTH_SHORT).show()
-                                } else {
-                                    premiumViewModel.ttsInitilize()
-                                    premiumViewModel.queueSperk(it)
-                                }
-                                cameraProvider.shutdown()
-                            }, {
-                                Toast.makeText(this, "画像解析に失敗しました", Toast.LENGTH_SHORT).show()
-                                cameraProvider.shutdown()
-                            }))
-                        }
-                cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, imageAnalysis)
-            } else {
-                this.requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CAMERA)
+            val bitmap = premiumViewModel.compressBitmap(createBitmap())
+            try {
+                val base64encoded = premiumViewModel.encodeBitmapToBase64(bitmap)
+                premiumViewModel.functionsInitilize()
+                premiumViewModel.annotateImage(base64encoded, {
+                    val text = premiumViewModel.annotationText(it)
+                    Timber.d("annotetion text $text")
+                    premiumViewModel.ttsInitilize()
+                    premiumViewModel.queueSperk(text.trim())
+                }, {
+                    Timber.d("failed annotateImage")
+                })
+            } catch (e: Exception) {
+                Timber.d("exception")
+                Timber.e(e)
             }
+
+
+//            if (allPermissionsGranted()) {
+//                val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+//                val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+//                val imageAnalysis = ImageAnalysis.Builder()
+//                        .build()
+//                        .also {
+//                            it.setAnalyzer(Executors.newSingleThreadExecutor(), MyImageAnalyzer(createBitmap(), {
+//                                if (it.isNullOrBlank()) {
+//                                    Toast.makeText(this, "認識可能な文字が見つかりませんでした", Toast.LENGTH_SHORT).show()
+//                                } else {
+//                                    premiumViewModel.ttsInitilize()
+//                                    premiumViewModel.queueSperk(it)
+//                                }
+//                                cameraProvider.shutdown()
+//                            }, {
+//                                Toast.makeText(this, "画像解析に失敗しました", Toast.LENGTH_SHORT).show()
+//                                cameraProvider.shutdown()
+//                            }))
+//                        }
+//                cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, imageAnalysis)
+//            } else {
+//                this.requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CAMERA)
+//            }
         }
 
         viewModel.onEraser.observe(this, Observer {

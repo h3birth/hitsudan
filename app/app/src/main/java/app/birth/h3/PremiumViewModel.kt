@@ -6,8 +6,11 @@ import androidx.lifecycle.viewModelScope
 import app.birth.h3.model.TextToSpeechState
 import app.birth.h3.repository.AnalyticsRepository
 import app.birth.h3.repository.AuthRepository
+import app.birth.h3.repository.FunctionsRepository
 import app.birth.h3.repository.TextToSpeechRepository
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
+import com.google.gson.JsonElement
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -20,6 +23,7 @@ import javax.inject.Inject
 class PremiumViewModel @Inject constructor(
         val textToSpeech: TextToSpeechRepository,
         val authRepository: AuthRepository,
+        val functionsRepository: FunctionsRepository,
         val analytics: AnalyticsRepository
 ): ViewModel() {
     private var queueSperk = ""
@@ -80,9 +84,26 @@ class PremiumViewModel @Inject constructor(
 
     fun encodeBitmapToBase64(bitmap: Bitmap): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
         val imageBytes: ByteArray = byteArrayOutputStream.toByteArray()
         return Base64.getEncoder().encodeToString(imageBytes)
+    }
+
+    fun functionsInitilize() {
+        functionsRepository.initilize()
+    }
+
+    fun annotateImage(base64encoded: String, onSuccess: (Task<JsonElement>) -> Unit, onFailed: () -> Unit) = functionsRepository.annotateImage(functionsRepository.buildAnnotateImageRequest(base64encoded).toString())?.addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            onSuccess(task)
+        } else {
+            onFailed()
+        }
+    }
+
+    fun annotationText(task: Task<JsonElement>): String {
+        val annotation = task.result.asJsonArray[0].asJsonObject["fullTextAnnotation"].asJsonObject
+        return annotation["text"].asString
     }
 
     override fun onCleared() {
