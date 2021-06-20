@@ -51,14 +51,11 @@ class FunctionsRepositoryImpl @Inject constructor(
         image.add("content", JsonPrimitive(base64encoded))
         request.add("image", image)
         val feature = JsonObject()
-        feature.add("type", JsonPrimitive("TEXT_DETECTION"))
+        feature.add("type", JsonPrimitive("DOCUMENT_TEXT_DETECTION"))
         val features = JsonArray()
         features.add(feature)
 
         val imageContext = JsonObject()
-        val languageHints = JsonArray()
-        languageHints.add("ja")
-        imageContext.add("languageHints", languageHints)
         request.add("imageContext", imageContext)
         request.add("features", features)
         return request
