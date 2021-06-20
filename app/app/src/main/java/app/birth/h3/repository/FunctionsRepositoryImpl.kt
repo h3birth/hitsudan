@@ -39,7 +39,7 @@ class FunctionsRepositoryImpl @Inject constructor(
 
                     if(!task.isSuccessful) return@continueWith null
 
-                    val result = task.result.data
+                    val result = task.result?.data
                     JsonParser.parseString(Gson().toJson(result))
                 }
     }

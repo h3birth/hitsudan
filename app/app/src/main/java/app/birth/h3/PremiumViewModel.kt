@@ -102,7 +102,8 @@ class PremiumViewModel @Inject constructor(
     }
 
     fun annotationText(task: Task<JsonElement>): String {
-        val annotation = task.result.asJsonArray[0].asJsonObject["fullTextAnnotation"].asJsonObject
+        if(task.result == null) return ""
+        val annotation = task.result!!.asJsonArray[0].asJsonObject["fullTextAnnotation"].asJsonObject
         return annotation["text"].asString
     }
 

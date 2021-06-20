@@ -18,15 +18,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.CameraX
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageProxy
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import app.birth.h3.databinding.ActivityMainBinding
@@ -41,9 +35,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.TextRecognizerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import kotlin.Exception
@@ -57,8 +48,7 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
     private var animator: ObjectAnimator? = null
 
     private val REQUEST_EXTERNAL_STORAGE = 1
-    private val REQUEST_CAMERA = 2
-    private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+    private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
 
     private val FIREBASE_AUTH = 10
 
@@ -195,14 +185,6 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
                 // パーミッション許可されなかった時、前の画面に戻す
                 Toast.makeText(this, "アプリ設定からカメラとストレージの権限を許可してください。", Toast.LENGTH_SHORT).show()
             }
-
-        if (requestCode == REQUEST_CAMERA)
-            if (allPermissionsGranted()) {
-                Toast.makeText(this, "カメラのパーミッションを許可しました", Toast.LENGTH_SHORT).show()
-            } else {
-                // パーミッション許可されなかった時、前の画面に戻す
-                Toast.makeText(this, "アプリ設定からカメラとストレージの権限を許可してください。", Toast.LENGTH_SHORT).show()
-            }
     }
 
     private fun sharePNG() {
@@ -335,33 +317,6 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
             }
         } else {
             Toast.makeText(this, "認証に失敗しました", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-
-    private class MyImageAnalyzer(val bitmap: Bitmap, var onSuccess: (String) -> Unit, val onFailed: (Exception) -> Unit) : ImageAnalysis.Analyzer {
-
-        @SuppressLint("UnsafeOptInUsageError")
-        override fun analyze(imageProxy: ImageProxy) {
-            Timber.d("start analyze")
-            val mediaImage = imageProxy.image
-            if (mediaImage != null) {
-                val image = InputImage.fromBitmap(bitmap, 0)
-                // Pass image to an ML Kit Vision API
-                val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-                val result = recognizer.process(image)
-                        .addOnSuccessListener { visionText ->
-                            // Task completed successfully
-                            Timber.d("vision = ${visionText.text}")
-                            onSuccess(visionText.text)
-                            imageProxy.close()
-                        }
-                        .addOnFailureListener { e ->
-                            Timber.e(e)
-                            onFailed(e)
-                            imageProxy.close()
-                        }
-            }
         }
     }
 }
