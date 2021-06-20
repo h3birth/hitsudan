@@ -24,7 +24,7 @@
             app:bitmap="@{bitmap}"
             app:scaleType='@{"centerCrop"}'
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintDimensionRatio="w,16:9"
+            app:layout_constraintDimensionRatio="w,9:16"
             app:layout_constraintBottom_toTopOf="@id/save"/>
 
         <Button
