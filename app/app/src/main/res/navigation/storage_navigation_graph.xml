@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/storage_navigation_graph"
+    app:startDestination="@id/storageImageListFragment">
+
+    <fragment
+        android:id="@+id/storageImageListFragment"
+        android:name="app.birth.h3.feature.StorageImageListFragment"
+        android:label="fragment_storage_image_list"
+        tools:layout="@layout/fragment_storage_image_list" >
+        <action
+            android:id="@+id/action_storageImageListFragment_to_storageImagePreviewFragment"
+            app:destination="@id/storageImagePreviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/storageImagePreviewFragment"
+        android:name="app.birth.h3.feature.StorageImagePreviewFragment"
+        android:label="fragment_storage_image_preview"
+        tools:layout="@layout/fragment_storage_image_preview" />
+</navigation>

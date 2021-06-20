@@ -11,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class StorageImagesViewModel @Inject constructor(
+class StorageImageListViewModel @Inject constructor(
         val spf: SharePreferenceRepository,
         val analytics: AnalyticsRepository
 ) : ViewModel(), LifecycleObserver {
