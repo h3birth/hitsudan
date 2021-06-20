@@ -25,6 +25,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import app.birth.h3.databinding.ActivityMainBinding
+import app.birth.h3.feature.StorageImagesActivity
 import app.birth.h3.util.BottomToolbarMode
 import app.birth.h3.util.FileUtil
 import app.birth.h3.util.ScreenUtil
@@ -203,6 +204,7 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
         binding?.drawerLayout?.closeDrawer(GravityCompat.START)
         when(item.getItemId()) {
             R.id.login -> launchFirebaseUI()
+            R.id.storage -> startActivity(Intent(this, StorageImagesActivity::class.java))
             else -> {}
         }
         return true

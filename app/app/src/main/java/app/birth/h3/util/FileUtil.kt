@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import app.birth.h3.BuildConfig
 import app.birth.h3.R
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -30,7 +31,7 @@ class FileUtil(val context: Context) {
 
     fun appDirectory() = "${context.resources.getString(R.string.app_name)}"
 
-    fun newFileName() = "${System.currentTimeMillis()}.png"
+    fun newFileName() = "hitsudan_${System.currentTimeMillis()}.png"
 
     fun saveFile(bitmap: Bitmap, onSuccess: (uri: Uri?) -> Unit, onFailed: (e: Exception) -> Unit) {
         val fileName = newFileName()
@@ -67,6 +68,51 @@ class FileUtil(val context: Context) {
             onSuccess(uri)
         } catch (e: FileSystemException) {
             onFailed(e)
+        }
+    }
+
+    fun loadImages() {
+        try {
+            val targetUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+            } else {
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            }
+
+            val projection: Array<String> = arrayOf(
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.TITLE,
+                    MediaStore.Images.ImageColumns.MIME_TYPE,
+                    MediaStore.Images.Media.RELATIVE_PATH)
+
+            val selection = "${MediaStore.Files.FileColumns.MIME_TYPE}=? AND ${MediaStore.Images.Media.RELATIVE_PATH}=?"
+
+            var selectionArgs = arrayOf("image/png", "Pictures/ひつだん/")
+
+            context.applicationContext.contentResolver.query(
+                targetUri,
+                projection,
+                selection,
+                selectionArgs,
+                null
+            )?.use {
+                if(it.count > 0) {
+                    while (it.moveToNext()) {
+                        val idColumn = it.getColumnIndexOrThrow(MediaStore.Images.ImageColumns._ID)
+                        val nameColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+                        val pathColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media.RELATIVE_PATH)
+
+                        val id = it.getLong(idColumn)
+                        val name = it.getString(nameColumn)
+                        val path = it.getString(pathColumn)
+                        Timber.d("load image id=${id}, path=${path}, name=${name}")
+                    }
+                }
+            }
+        } catch (e: FileSystemException) {
+            Timber.d("FileSystemException")
+            Timber.e(e)
         }
     }
 }

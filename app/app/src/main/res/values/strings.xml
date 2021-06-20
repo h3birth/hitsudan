@@ -11,6 +11,7 @@
     <string name="login">ログイン</string>
     <string name="logout">ログアウト</string>
     <string name="withdrawal">退会</string>
+    <string name="storage">画像フォルダ</string>
 
     <string name="setting_pen_weight">ペンの太さ</string>
     <string name="setting_pen_color">ペンの色</string>
