@@ -131,31 +131,6 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
                 Timber.d("exception")
                 Timber.e(e)
             }
-
-
-//            if (allPermissionsGranted()) {
-//                val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-//                val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-//                val imageAnalysis = ImageAnalysis.Builder()
-//                        .build()
-//                        .also {
-//                            it.setAnalyzer(Executors.newSingleThreadExecutor(), MyImageAnalyzer(createBitmap(), {
-//                                if (it.isNullOrBlank()) {
-//                                    Toast.makeText(this, "認識可能な文字が見つかりませんでした", Toast.LENGTH_SHORT).show()
-//                                } else {
-//                                    premiumViewModel.ttsInitilize()
-//                                    premiumViewModel.queueSperk(it)
-//                                }
-//                                cameraProvider.shutdown()
-//                            }, {
-//                                Toast.makeText(this, "画像解析に失敗しました", Toast.LENGTH_SHORT).show()
-//                                cameraProvider.shutdown()
-//                            }))
-//                        }
-//                cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, imageAnalysis)
-//            } else {
-//                this.requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CAMERA)
-//            }
         }
 
         viewModel.onEraser.observe(this, Observer {
