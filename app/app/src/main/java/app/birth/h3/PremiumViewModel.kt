@@ -6,7 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.birth.h3.model.TextToSpeechState
 import app.birth.h3.repository.AnalyticsRepository
+import app.birth.h3.repository.AuthRepository
 import app.birth.h3.repository.TextToSpeechRepository
+import com.firebase.ui.auth.data.model.User
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PremiumViewModel @Inject constructor(
         val textToSpeech: TextToSpeechRepository,
+        val authRepository: AuthRepository,
         val analytics: AnalyticsRepository
 ): ViewModel() {
     private var queueSperk = ""
@@ -49,6 +53,10 @@ class PremiumViewModel @Inject constructor(
         }
         queueSperk = ""
     }
+
+    fun intentFirebaseUI() = authRepository.intentFirebaseUI()
+
+    fun saveUser(user: FirebaseUser) = authRepository.saveUser(user)
 
     override fun onCleared() {
         super.onCleared()

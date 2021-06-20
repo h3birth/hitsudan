@@ -2,6 +2,8 @@ package app.birth.h3.module
 
 import app.birth.h3.repository.AnalyticsRepository
 import app.birth.h3.repository.AnalyticsRepositoryImpl
+import app.birth.h3.repository.AuthRepository
+import app.birth.h3.repository.AuthRepositoryImpl
 import app.birth.h3.repository.ColorRepository
 import app.birth.h3.repository.ColorRepositoryImpl
 import app.birth.h3.repository.SharePreferenceRepository
@@ -33,4 +35,8 @@ abstract class RepositoryModule {
     @Binds
     @ViewModelScoped
     abstract fun bindTextToSpeechRepository(impl: TextToSpeechRepositoryImpl): TextToSpeechRepository
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
 }

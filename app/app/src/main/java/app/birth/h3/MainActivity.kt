@@ -5,6 +5,7 @@ import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -35,8 +36,10 @@ import app.birth.h3.util.ScreenUtil
 import app.birth.h3.view.PaintView
 import app.birth.h3.view.PenSettingDialogFragment
 import app.birth.h3.view.SaveConfirmDialogFragment
+import com.firebase.ui.auth.IdpResponse
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
@@ -58,6 +61,8 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
     private val REQUEST_EXTERNAL_STORAGE = 1
     private val REQUEST_CAMERA = 2
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+
+    private val FIREBASE_AUTH = 10
 
     private lateinit var fileUtil: FileUtil
 
@@ -220,9 +225,17 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
         viewModel.onSettingBackground()
     }
 
-    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
         binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+        when(item.getItemId()) {
+            R.id.login -> launchFirebaseUI()
+            else -> {}
+        }
         return true
+    }
+
+    private fun launchFirebaseUI() {
+        startActivityForResult(premiumViewModel.intentFirebaseUI(), FIREBASE_AUTH)
     }
 
     private fun setMessagingToken() {
@@ -289,6 +302,24 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
         }, onFailed = {
             Toast.makeText(this, "ファイル保存に失敗しました。アクセス権限を確認してください。", Toast.LENGTH_SHORT).show()
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == FIREBASE_AUTH) {
+            val response = IdpResponse.fromResultIntent(data)
+            if(resultCode == Activity.RESULT_OK) {
+                FirebaseAuth.getInstance().currentUser?.let {
+                    premiumViewModel.saveUser(it)
+                    Toast.makeText(this, "ログインしました", Toast.LENGTH_SHORT).show()
+                } ?:
+                    Toast.makeText(this, "ユーザー情報の取得に失敗しました", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "認証に失敗しました", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "認証に失敗しました", Toast.LENGTH_SHORT).show()
+        }
     }
 
 

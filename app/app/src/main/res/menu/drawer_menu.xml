@@ -3,9 +3,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_item1"
-            android:icon="@android:drawable/ic_menu_my_calendar"
-            android:title="Calendar" />
+            android:id="@+id/login"
+            android:icon="@drawable/ic_baseline_login_24"
+            android:title="@string/login" />
         <item
             android:id="@+id/menu_item2"
             android:icon="@android:drawable/ic_menu_myplaces"
