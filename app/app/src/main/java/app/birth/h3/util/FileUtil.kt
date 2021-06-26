@@ -1,5 +1,6 @@
 package app.birth.h3.util
 
+import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
@@ -7,15 +8,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.widget.Toast
+import android.util.Size
+import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import app.birth.h3.BuildConfig
 import app.birth.h3.R
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
-import java.net.URI
+
 
 class FileUtil(val context: Context) {
     companion object {
@@ -71,7 +72,8 @@ class FileUtil(val context: Context) {
         }
     }
 
-    fun loadImages() {
+    fun loadImages(): List<Bitmap> {
+        val bitmaps = mutableListOf<Bitmap>()
         try {
             val targetUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
@@ -107,6 +109,14 @@ class FileUtil(val context: Context) {
                         val name = it.getString(nameColumn)
                         val path = it.getString(pathColumn)
                         Timber.d("load image id=${id}, path=${path}, name=${name}")
+                        val imageUri_t = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            val bitmap = context.applicationContext.contentResolver.loadThumbnail(
+                                    imageUri_t,
+                                    Size(640, 480), null)
+                            bitmaps.add(bitmap)
+                        }
                     }
                 }
             }
@@ -114,5 +124,6 @@ class FileUtil(val context: Context) {
             Timber.d("FileSystemException")
             Timber.e(e)
         }
+        return bitmaps.toList()
     }
 }

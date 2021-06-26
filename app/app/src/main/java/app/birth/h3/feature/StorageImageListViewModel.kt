@@ -8,6 +8,7 @@ import app.birth.h3.repository.ColorRepository
 import app.birth.h3.repository.SharePreferenceRepository
 import app.birth.h3.util.FileUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +23,7 @@ class StorageImageListViewModel @Inject constructor(
     }
 
     fun loadImage() {
-        fileUtil?.loadImages()
+        val list = fileUtil?.loadImages()
+        Timber.d("load bitmaps = ${list.toString()}")
     }
 }
