@@ -11,7 +11,7 @@
     <string name="login">ログイン</string>
     <string name="logout">ログアウト</string>
     <string name="withdrawal">退会</string>
-    <string name="storage">画像フォルダ</string>
+    <string name="storage">@string/list_images_title</string>
 
     <string name="setting_pen_weight">ペンの太さ</string>
     <string name="setting_pen_color">ペンの色</string>
@@ -28,5 +28,5 @@
     <string name="pref_key_background_color">PREF_KEY_BACKGROUND_COLOR</string>
     <string name="pref_key_shown_eraser">PREF_KEY_SHOWN_ERASER</string>
 
-    <string name="list_images_title">画像一覧</string>
+    <string name="list_images_title">保存した画像</string>
 </resources>

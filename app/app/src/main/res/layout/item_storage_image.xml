@@ -16,6 +16,10 @@
             android:scaleType="centerCrop"
             android:background="@drawable/border_grey"
             android:padding="1dp"
+            android:onClick="@null"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             app:bitmap="@{storageImage.thumbnail}"
             app:scaleType='@{"centerCrop"}'
             app:layout_constraintTop_toTopOf="parent"

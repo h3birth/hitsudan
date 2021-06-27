@@ -15,4 +15,9 @@
         <item name="android:textColor">@color/textGrey</item>
     </style>
 
+    <style name="CustomToolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:tint">#FFFFFF</item>
+        <item name="colorControlNormal">#FFFFFF</item>
+    </style>
+
 </resources>
