@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import app.birth.h3.local.entity.StorageImages
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StorageImagesDao {

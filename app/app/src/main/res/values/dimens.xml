@@ -11,4 +11,5 @@
     <dimen name="margin_3l">32dp</dimen>
 
     <dimen name="toolbar_icon_size">50dp</dimen>
+    <dimen name="storage_image_height">120dp</dimen>
 </resources>
