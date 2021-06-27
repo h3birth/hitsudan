@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import app.birth.h3.BuildConfig
 import app.birth.h3.R
+import app.birth.h3.local.entity.StorageImages
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -72,8 +73,8 @@ class FileUtil(val context: Context) {
         }
     }
 
-    fun loadImages(): List<Bitmap> {
-        val bitmaps = mutableListOf<Bitmap>()
+    fun loadImages(): List<StorageImages> {
+        val storageImages = mutableListOf<StorageImages>()
         try {
             val targetUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
@@ -115,7 +116,8 @@ class FileUtil(val context: Context) {
                             val bitmap = context.applicationContext.contentResolver.loadThumbnail(
                                     imageUri_t,
                                     Size(640, 480), null)
-                            bitmaps.add(bitmap)
+                            val item = StorageImages(id = 0, imageId = id, name = name, thumbnail = bitmap)
+                            storageImages.add(item)
                         }
                     }
                 }
@@ -124,6 +126,6 @@ class FileUtil(val context: Context) {
             Timber.d("FileSystemException")
             Timber.e(e)
         }
-        return bitmaps.toList()
+        return storageImages.toList()
     }
 }

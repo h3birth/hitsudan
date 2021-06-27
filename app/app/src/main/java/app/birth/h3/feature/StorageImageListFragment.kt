@@ -7,24 +7,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import app.birth.h3.R
+import app.birth.h3.databinding.FragmentStorageImageListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class StorageImageListFragment : Fragment() {
+class StorageImageListFragment : Fragment(R.layout.fragment_storage_image_list) {
     private val viewModel: StorageImageListViewModel by viewModels()
+    private var _binding: FragmentStorageImageListBinding? = null
+    private val binding get() = _binding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_storage_image_list, container, false)
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+        _binding = FragmentStorageImageListBinding.bind(view)
+        binding?.toolbar?.setNavigationOnClickListener {
+            activity?.finish()
+        }
 
         viewModel.init(requireContext())
-
         viewModel.loadImage()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
