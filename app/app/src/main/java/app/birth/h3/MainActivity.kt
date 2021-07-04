@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
         binding?.fabDelete?.setOnClickListener {_ ->
             var paintView : PaintView = findViewById(R.id.paintView)
             paintView.clear()
+            viewModel.deleteLoadImage()
         }
 
         binding?.drawerLayout?.let {

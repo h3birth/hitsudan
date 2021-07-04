@@ -80,6 +80,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun deleteLoadImage() {
+        viewModelScope.launch {
+            loadImageDispatcher.deleteLoadImage()
+        }
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
         Log.i(this.javaClass.simpleName, "onCreate")

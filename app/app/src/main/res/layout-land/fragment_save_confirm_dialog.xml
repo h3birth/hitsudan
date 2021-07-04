@@ -28,19 +28,6 @@
             app:layout_constraintBottom_toTopOf="@id/save"/>
 
         <Button
-            android:id="@+id/save"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:layout_marginTop="@dimen/margin_m"
-            android:layout_marginEnd="@dimen/margin_m"
-            android:layout_marginBottom="@dimen/margin_l"
-            app:layout_constraintStart_toStartOf="@+id/image"
-            app:layout_constraintEnd_toStartOf="@id/cancel"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <Button
             android:id="@+id/cancel"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:textColor="@color/colorPink"
@@ -50,9 +37,22 @@
             android:text="@string/cancel"
             android:layout_marginStart="@dimen/margin_m"
             android:layout_marginBottom="@dimen/margin_l"
-            app:layout_constraintStart_toEndOf="@id/save"
-            app:layout_constraintEnd_toEndOf="@id/image"
+            app:layout_constraintStart_toStartOf="@+id/image"
+            app:layout_constraintEnd_toStartOf="@id/save"
             app:layout_constraintTop_toTopOf="@id/save" />
+
+        <Button
+            android:id="@+id/save"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:layout_marginTop="@dimen/margin_m"
+            android:layout_marginEnd="@dimen/margin_m"
+            android:layout_marginBottom="@dimen/margin_l"
+            app:layout_constraintStart_toEndOf="@id/cancel"
+            app:layout_constraintEnd_toEndOf="@id/image"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
