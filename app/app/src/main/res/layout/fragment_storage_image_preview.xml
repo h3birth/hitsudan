@@ -15,7 +15,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:bitmap="@{viewModel.storageImage.originalImage}"
+            app:bitmap="@{viewModel.loadBitmap}"
             app:scaleType='@{"centerInside"}'
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,21 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:text="@{viewModel.imageName}"
+            android:textStyle="bold"
+            android:textColor="@color/colorPenWhite"
+            app:layout_constraintTop_toTopOf="@id/back_arrow"
+            app:layout_constraintBottom_toBottomOf="@id/back_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="タイトル"/>
+
         <ImageView
+            android:id="@+id/back_arrow"
             android:layout_width="@dimen/toolbar_backarrow_size"
             android:layout_height="@dimen/toolbar_backarrow_size"
             android:src="@drawable/ic_baseline_arrow_back_24"

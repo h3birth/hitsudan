@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import app.birth.h3.R
 import app.birth.h3.databinding.FragmentStorageImagePreviewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class StorageImagePreviewFragment : Fragment(R.layout.fragment_storage_image_preview) {
