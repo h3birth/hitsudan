@@ -27,6 +27,7 @@ class StorageImagePreviewFragment : Fragment(R.layout.fragment_storage_image_pre
         viewModel.loadImage(args.imageId)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.fragmentActivity = requireActivity()
     }
 
     override fun onDestroy() {

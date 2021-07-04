@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
+            name="fragmentActivity"
+            type="androidx.fragment.app.FragmentActivity" />
+        <variable
             name="viewModel"
             type="app.birth.h3.feature.StorageImagePreviewViewModel" />
     </data>
@@ -112,6 +115,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{(v) -> viewModel.onClickLoadImage(fragmentActivity)}"
             app:layout_constraintStart_toEndOf="@id/cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

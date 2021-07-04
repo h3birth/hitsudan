@@ -2,6 +2,7 @@ package app.birth.h3.module
 
 import android.content.Context
 import androidx.room.Room
+import app.birth.h3.dispatcher.LoadImageDispatcher
 import app.birth.h3.local.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -21,5 +22,11 @@ object SingltonModule {
                 context,
                 AppDatabase::class.java
         ).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideLoadImageDispacher(): LoadImageDispatcher {
+        return LoadImageDispatcher()
     }
 }

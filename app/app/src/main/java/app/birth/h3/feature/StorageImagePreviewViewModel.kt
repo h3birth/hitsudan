@@ -3,11 +3,13 @@ package app.birth.h3.feature
 import android.content.Context
 import android.graphics.Bitmap
 import android.view.View
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
+import app.birth.h3.dispatcher.LoadImageDispatcher
 import app.birth.h3.local.AppDatabase
 import app.birth.h3.local.entity.StorageImages
 import app.birth.h3.repository.AnalyticsRepository
@@ -18,6 +20,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,7 +29,8 @@ class StorageImagePreviewViewModel @Inject constructor(
         @ApplicationContext val context: Context,
         val spf: SharePreferenceRepository,
         val analytics: AnalyticsRepository,
-        val database: AppDatabase
+        val database: AppDatabase,
+        val loadImageDispatcher: LoadImageDispatcher
 ) : ViewModel() {
     val storageImage = MutableLiveData<StorageImages>()
     val loadBitmap = MutableLiveData<Bitmap>()
@@ -47,5 +51,13 @@ class StorageImagePreviewViewModel @Inject constructor(
 
     fun onClickPopback(v: View) {
         v.findNavController().popBackStack()
+    }
+
+    fun onClickLoadImage(fragmentActivity: FragmentActivity) {
+        viewModelScope.launch {
+            loadImageDispatcher.emitLoadImage(loadBitmap.value)
+        }
+
+        fragmentActivity.finishAndRemoveTask()
     }
 }

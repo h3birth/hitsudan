@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Nullable;
 
 import app.birth.h3.R;
 import app.birth.h3.model.Color;
@@ -50,6 +53,7 @@ public class PaintView extends View {
     private List<Path> zIndexPath = new ArrayList<Path>();
     private List<Paint> zIndexPaint = new ArrayList<Paint>();
     private SharePreferenceRepository spf;
+    @Nullable private Bitmap drawBitmap = null;
 
     public PaintView(Context context) {
         this(context, null);
@@ -63,13 +67,18 @@ public class PaintView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if(drawBitmap != null) {
+            Rect source = new Rect(0, 0, drawBitmap.getWidth(), drawBitmap.getHeight());
+            canvas.drawBitmap(drawBitmap, null, source, null);
+        }
+
         // Pen
         for (int i = 0; i < zIndexPath.size(); i++) {
             Path pt = zIndexPath.get(i);
             Paint paint = zIndexPaint.get(i);
             canvas.drawPath(pt, paint);
         }
-        if(eraser) {
+        if (eraser) {
             if (eraserPath != null && eraserPaint != null) {
                 canvas.drawPath(eraserPath, eraserPaint);
             }
@@ -78,6 +87,16 @@ public class PaintView extends View {
                 canvas.drawPath(current_path, current_paint);
             }
         }
+    }
+
+    public void drawBitmap(Bitmap bitmap) {
+        drawBitmap = bitmap;
+        clearPaintPath();
+        invalidate();
+    }
+
+    public void clearBitmap() {
+        drawBitmap = null;
     }
 
     private void initilize() {
@@ -174,7 +193,7 @@ public class PaintView extends View {
         setWeight();
     }
 
-    public void clear(){
+    public void clearPaintPath() {
         for (int i = 0; i < listPath.size(); i++) {
             Path pt = listPath.get(i);
             pt.reset();
@@ -187,6 +206,11 @@ public class PaintView extends View {
         listPaint.clear();
         listEraserPath.clear();
         listEraserPaint.clear();
+    }
+
+    public void clear(){
+        clearPaintPath();
+        clearBitmap();
         invalidate();
     }
 

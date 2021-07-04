@@ -8,19 +8,28 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import app.birth.h3.dispatcher.LoadImageDispatcher
 import app.birth.h3.model.Color
 import app.birth.h3.repository.AnalyticsRepository
 import app.birth.h3.repository.ColorRepository
 import app.birth.h3.repository.SharePreferenceRepository
 import app.birth.h3.util.BottomToolbarMode
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
         val spf: SharePreferenceRepository,
         val colors: ColorRepository,
-        val analytics: AnalyticsRepository
+        val analytics: AnalyticsRepository,
+        val loadImageDispatcher: LoadImageDispatcher
 ) : ViewModel(), LifecycleObserver {
     val backgroundColor = MutableLiveData(getColor(spf.getBackgroundColor()))
     val shownEraser = MutableLiveData(spf.getShownEraser())
@@ -47,6 +56,8 @@ class MainViewModel @Inject constructor(
         BottomToolbarMode.Open -> View.VISIBLE
         else -> View.GONE
     } }
+
+    val loadImageBitmap = loadImageDispatcher.loadImage.asLiveData()
 
     fun getColor(id: Int): String {
         val color = colors.getColorById(id) ?: colors.white

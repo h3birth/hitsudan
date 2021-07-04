@@ -24,6 +24,8 @@ import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import app.birth.h3.databinding.ActivityMainBinding
 import app.birth.h3.feature.StorageImagesActivity
 import app.birth.h3.util.BottomToolbarMode
@@ -38,6 +40,10 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.Exception
 
@@ -147,6 +153,12 @@ class MainActivity : AppCompatActivity(), PenSettingDialogFragment.Listener, Sav
             Log.d(this.javaClass.simpleName, "background color $it")
             var paintView : PaintView = findViewById(R.id.paintView)
             paintView.changeEraserColor(it)
+        })
+
+        viewModel.loadImageBitmap.observe(this, Observer {
+            Timber.d("load image bitmap $it")
+            var paintView : PaintView = findViewById(R.id.paintView)
+            paintView.drawBitmap(it)
         })
     }
 
