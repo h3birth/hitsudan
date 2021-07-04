@@ -30,7 +30,6 @@ class StorageImagePreviewViewModel @Inject constructor(
 ) : ViewModel() {
     val storageImage = MutableLiveData<StorageImages>()
     val loadBitmap = MutableLiveData<Bitmap>()
-
     val imageName = MutableLiveData<String>()
 
     fun loadImage(imageId: Int) {

@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_storage_image_list" >
         <action
             android:id="@+id/action_storageImageListFragment_to_storageImagePreviewFragment"
-            app:destination="@id/storageImagePreviewFragment" />
+            app:destination="@id/storageImagePreviewFragment"
+            app:enterAnim="@anim/nav_slide_enter_anim"
+            app:exitAnim="@anim/nav_slide_exit_anim"
+            app:popExitAnim="@anim/nav_slide_pop_enter_anim"
+            app:popEnterAnim="@anim/nav_slide_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/storageImagePreviewFragment"
