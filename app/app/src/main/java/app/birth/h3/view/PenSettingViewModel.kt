@@ -56,6 +56,14 @@ class PenSettingViewModel @Inject constructor(
         if(it) View.VISIBLE else View.GONE
     }
 
+    val customPenPicker = MutableLiveData(false)
+    val customPenPickerVisibility = customPenPicker.map {
+        if(it) View.VISIBLE else View.GONE
+    }
+    val presetPenColorVisibility = customPenPicker.map {
+        if(it) View.INVISIBLE else View.VISIBLE
+    }
+
     private fun isSelect(color: Color): String {
         return if((penColor.value ?: 0 + 1) == color.id) "●" else ""
     }
@@ -76,5 +84,15 @@ class PenSettingViewModel @Inject constructor(
 
     fun onClickBackgroundColor(color: Color) {
         if(isLoadImageBitmap.value != true) backgroundColor.postValue(color.id)
+    }
+
+    fun onClickCustomPenColor() {
+        customPenPicker.postValue(customPenPicker.value?.not())
+    }
+
+    fun setPenColorOnPicker(colorInt: Int) {
+        val hex = Integer.toHexString(colorInt)
+        colors.setCutomPenColor(hex)
+        penColor.postValue(colors.customColorId)
     }
 }

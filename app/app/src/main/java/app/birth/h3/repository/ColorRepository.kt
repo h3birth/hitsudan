@@ -6,6 +6,10 @@ interface ColorRepository {
     fun listPenColors() : List<Color>
     fun listBackgroundColors() : List<Color>
     fun getColorById(id: Int) : Color?
+    fun setCutomPenColor(colorHex: String)
+
+    val customColorId: Int
+    var customPenColor: Color?
 
     val black: Color
     val blue: Color

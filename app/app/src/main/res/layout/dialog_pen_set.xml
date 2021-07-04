@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:visibility="@{viewModel.presetPenColorVisibility}"
                 app:layout_constraintTop_toBottomOf="@id/pen_color"
                 app:layout_constraintStart_toStartOf="@id/pen_color"
                 app:layout_constraintEnd_toEndOf="@id/seekbar_pen_weight">
@@ -249,6 +250,31 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <com.jaredrummler.android.colorpicker.ColorPickerView
+                android:id="@+id/pen_color_picker"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="@{viewModel.customPenPickerVisibility}"
+                app:layout_constraintTop_toTopOf="@id/pen_color_list"
+                app:layout_constraintStart_toStartOf="@id/pen_color_list"
+                app:layout_constraintEnd_toEndOf="@id/pen_color_list"
+                app:layout_constraintBottom_toBottomOf="@id/pen_color_list"/>
+
+            <Button
+                android:id="@+id/custom_pen_color"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPink"
+                android:text="@string/custom_pen_color"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/ic_baseline_lock_24"
+                android:onClick="@{() -> viewModel.onClickCustomPenColor()}"
+                app:layout_constraintTop_toBottomOf="@id/pen_color_list"
+                app:layout_constraintStart_toStartOf="@id/pen_color_list"
+                app:layout_constraintEnd_toEndOf="@id/pen_color_list" />
+
             <TextView
                 android:id="@+id/background_color"
                 android:layout_width="wrap_content"
@@ -256,7 +282,7 @@
                 android:textAppearance="@style/PenSettingLabel"
                 android:layout_marginTop="@dimen/fab_margin"
                 android:text="@string/setting_background_color"
-                app:layout_constraintTop_toBottomOf="@id/pen_color_list"
+                app:layout_constraintTop_toBottomOf="@id/custom_pen_color"
                 app:layout_constraintStart_toStartOf="@id/pen_color" />
 
             <LinearLayout

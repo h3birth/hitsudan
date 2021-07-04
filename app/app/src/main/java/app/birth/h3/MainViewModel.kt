@@ -9,6 +9,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import app.birth.h3.dispatcher.LoadImageDispatcher
 import app.birth.h3.model.Color
@@ -93,5 +94,11 @@ class MainViewModel @Inject constructor(
     fun onCreate() {
         Log.i(this.javaClass.simpleName, "onCreate")
         analytics.initialize()
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun onResume() {
+        Timber.d("onResume")
+        Timber.d("penColor spf= ${spf.getPenColor()}")
     }
 }

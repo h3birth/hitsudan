@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import app.birth.h3.R
 import app.birth.h3.databinding.DialogPenSetBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class PenSettingDialogFragment(val listener: Listener): DialogFragment() {
@@ -25,6 +26,9 @@ class PenSettingDialogFragment(val listener: Listener): DialogFragment() {
         val binding = DialogPenSetBinding.inflate(LayoutInflater.from(activity), null, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        binding.penColorPicker.setOnColorChangedListener {
+            viewModel.setPenColorOnPicker(it)
+        }
 
         val dialog = AlertDialog.Builder(activity)
                 .setView(binding.root)
