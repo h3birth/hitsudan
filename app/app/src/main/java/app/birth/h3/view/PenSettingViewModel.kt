@@ -1,9 +1,13 @@
 package app.birth.h3.view
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
+import app.birth.h3.dispatcher.LoadImageDispatcher
 import app.birth.h3.model.Color
 import app.birth.h3.repository.ColorRepository
 import app.birth.h3.repository.SharePreferenceRepository
@@ -13,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class PenSettingViewModel @Inject constructor(
         val spf: SharePreferenceRepository,
-        val colors: ColorRepository
+        val colors: ColorRepository,
+        val loadImageDispatcher: LoadImageDispatcher
 ): ViewModel() {
     val penWeight = MutableLiveData(spf.getPenWeight())
     var penColor = MutableLiveData(spf.getPenColor())
@@ -44,6 +49,13 @@ class PenSettingViewModel @Inject constructor(
     val isLightYellow = Transformations.map (backgroundColor) { isBackgroundSelect(colors.lightYellow) }
     val isLightBlue = Transformations.map (backgroundColor) { isBackgroundSelect(colors.lightBlue) }
 
+    val isLoadImageBitmap = loadImageDispatcher.loadImage.asLiveData().map {
+        it != null
+    }
+    val noBackgroundColorVisibility = isLoadImageBitmap.map {
+        if(it) View.VISIBLE else View.GONE
+    }
+
     private fun isSelect(color: Color): String {
         return if((penColor.value ?: 0 + 1) == color.id) "●" else ""
     }
@@ -63,6 +75,6 @@ class PenSettingViewModel @Inject constructor(
     }
 
     fun onClickBackgroundColor(color: Color) {
-        backgroundColor.postValue(color.id)
+        if(isLoadImageBitmap.value != true) backgroundColor.postValue(color.id)
     }
 }

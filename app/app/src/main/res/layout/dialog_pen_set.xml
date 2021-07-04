@@ -329,6 +329,20 @@
             </LinearLayout>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/alphaWhite"
+                android:text="@string/no_background_color"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:gravity="center|center_horizontal"
+                android:textColor="@color/colorPink"
+                android:visibility="@{viewModel.noBackgroundColorVisibility}"
+                app:layout_constraintTop_toTopOf="@id/background_color_list"
+                app:layout_constraintBottom_toBottomOf="@id/background_color_list"
+                app:layout_constraintStart_toStartOf="@id/background_color_list"
+                app:layout_constraintEnd_toEndOf="@id/background_color_list" />
+
+            <TextView
                 android:id="@+id/options"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

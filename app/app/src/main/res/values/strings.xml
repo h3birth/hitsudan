@@ -31,4 +31,6 @@
 
     <string name="list_images_title">保存した画像</string>
     <string name="confirm_load_image">この画像を読み込みますか？</string>
+
+    <string name="no_background_color">画像を読み込んでいる時は\n背景色を指定できません</string>
 </resources>
