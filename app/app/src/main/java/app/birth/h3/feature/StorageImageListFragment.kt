@@ -41,8 +41,7 @@ class StorageImageListFragment : Fragment(R.layout.fragment_storage_image_list) 
             layoutManager = GridLayoutManager(context, 3)
         }
 
-        viewModel.init(requireContext())
-        viewModel.loadImage()
+        viewLifecycleOwner.lifecycle.addObserver(viewModel)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.flow.collectLatest { pagingData ->

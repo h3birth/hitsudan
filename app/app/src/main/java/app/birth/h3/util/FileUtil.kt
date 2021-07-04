@@ -4,6 +4,8 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -113,10 +115,12 @@ class FileUtil(val context: Context) {
                         val imageUri_t = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                            val bitmap = context.applicationContext.contentResolver.loadThumbnail(
+                            val thumbnail = context.applicationContext.contentResolver.loadThumbnail(
                                     imageUri_t,
                                     Size(640, 480), null)
-                            val item = StorageImages(id = 0, imageId = id, name = name, thumbnail = bitmap)
+                            val source = ImageDecoder.createSource(context.applicationContext.contentResolver, imageUri_t)
+                            val originalImage = ImageDecoder.decodeBitmap(source)
+                            val item = StorageImages(id = 0, imageId = id, name = name, thumbnail = thumbnail, originalImage = originalImage)
                             storageImages.add(item)
                         }
                     }

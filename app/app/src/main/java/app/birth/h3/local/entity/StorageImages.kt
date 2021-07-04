@@ -12,5 +12,6 @@ data class StorageImages(
         @PrimaryKey(autoGenerate = true) var id: Int,
         @ColumnInfo(name = "image_id") var imageId: Long,
         @ColumnInfo(name = "name") var name: String,
-        @ColumnInfo(name = "thumbnail") var thumbnail: Bitmap?
+        @ColumnInfo(name = "thumbnail") var thumbnail: Bitmap?,
+        @ColumnInfo(name = "original_Image") var originalImage: Bitmap?
 )
