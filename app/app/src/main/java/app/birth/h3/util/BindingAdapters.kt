@@ -48,3 +48,9 @@ fun setSrcDrawable(imageView: ImageView, bitmap: Bitmap?, scaleType: String) {
     }
     Glide.with(imageView.context).load(bitmap).apply(options).into(imageView)
 }
+
+@BindingAdapter("android:tint")
+fun ImageView.setTint(hexCode: String) {
+    val color = Color.parseColor(hexCode)
+    this.imageTintList = ColorStateList.valueOf(color)
+}

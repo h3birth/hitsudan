@@ -39,6 +39,7 @@
                 android:visibility="@{viewModel.eraserButtonVisibility}"
                 app:backgroundTint="@{viewModel.eraserButtonColor}"
                 android:onClick="@{()->viewModel.onClickEraser()}"
+                android:tint="@color/colorPenWhite"
                 app:layout_constraintBottom_toTopOf="@id/eraser_switch_text"
                 app:layout_constraintStart_toStartOf="@id/fab_delete"
                 app:srcCompat="@drawable/ic_eraser" />
@@ -141,7 +142,7 @@
                     android:paddingStart="@dimen/margin_2l"
                     android:paddingEnd="@dimen/margin_2l"
                     android:background="@drawable/button_toolbar_background"
-                    android:visibility="@{viewModel.toolbarBottomVisibility, default=gone}">
+                    android:visibility="@{viewModel.toolbarBottomVisibility, default=visible}">
 
                     <ImageView
                         android:id="@+id/eraser"
@@ -152,21 +153,25 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?attr/selectableItemBackground"
+                        android:tint="@{viewModel.eraserBottomToolbarTint}"
+                        android:onClick="@{()->viewModel.onClickEraser()}"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/eraser_label"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="消しゴム"
+                        android:text="@{viewModel.eraserText}"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?attr/selectableItemBackground"
+                        android:onClick="@{()->viewModel.onClickEraser()}"
                         app:layout_constraintStart_toStartOf="@id/eraser"
                         app:layout_constraintEnd_toEndOf="@id/eraser"
-                        app:layout_constraintTop_toBottomOf="@id/eraser"/>
+                        app:layout_constraintTop_toBottomOf="@id/eraser"
+                        tools:text="消しゴムON"/>
 
                     <ImageView
                         android:id="@+id/save"

@@ -46,6 +46,9 @@ class MainViewModel @Inject constructor(
     val eraserTextColor = Transformations.map(backgroundColor) {
         if(it == colors.dark.code) "#FFFFFF" else "#333333"
     }
+    val eraserBottomToolbarTint = Transformations.map(onEraser) {
+        if(it) "#009688" else "#000000"
+    }
 
     val bottomToolbarMode = MutableLiveData(BottomToolbarMode.Close)
     val toolbarTabRotation = Transformations.map(bottomToolbarMode) { when(it){
