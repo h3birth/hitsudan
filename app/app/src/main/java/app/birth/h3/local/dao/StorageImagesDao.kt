@@ -15,4 +15,7 @@ interface StorageImagesDao {
 
     @Query("SELECT * FROM storage_images ORDER BY image_id DESC LIMIT :limit OFFSET :offset")
     fun select(limit: Int = 18, offset: Int = 0): PagingSource<Int, StorageImages>
+
+    @Query("SELECT * FROM storage_images WHERE id = :id LIMIT 1")
+    fun selectById(id: Int): Flow<StorageImages>
 }

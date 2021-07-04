@@ -24,7 +24,7 @@ class StorageImageListFragment : Fragment(R.layout.fragment_storage_image_list) 
     private val viewModel: StorageImageListViewModel by viewModels()
     private var _binding: FragmentStorageImageListBinding? = null
     private val binding get() = _binding
-    val pagingAdapter = StorageImagesAdapter()
+    lateinit var pagingAdapter: StorageImagesAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,6 +33,8 @@ class StorageImageListFragment : Fragment(R.layout.fragment_storage_image_list) 
         binding?.toolbar?.setNavigationOnClickListener {
             activity?.finish()
         }
+
+        pagingAdapter = StorageImagesAdapter(viewModel)
 
         binding?.recyclerView?.apply {
             adapter = pagingAdapter

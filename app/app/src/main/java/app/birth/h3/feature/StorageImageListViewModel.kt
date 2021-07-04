@@ -1,9 +1,14 @@
 package app.birth.h3.feature
 
 import android.content.Context
+import android.view.View
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
@@ -42,6 +47,11 @@ class StorageImageListViewModel @Inject constructor(
         CoroutineScope(Dispatchers.IO).launch {
             database.storageImagesDao().insertAll(list)
         }
+    }
+
+    fun onClickImage(v: View, storageImages: StorageImages) {
+        val action = StorageImageListFragmentDirections.actionStorageImageListFragmentToStorageImagePreviewFragment(storageImages.id)
+        v.findNavController().navigate(action)
     }
 
     val flow = Pager(PagingConfig(10), 0) {

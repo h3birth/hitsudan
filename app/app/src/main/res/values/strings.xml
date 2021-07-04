@@ -21,6 +21,7 @@
 
     <string name="save">保存する</string>
     <string name="cancel">キャンセル</string>
+    <string name="load">この画像を読み込む</string>
 
     <string name="pref_pen_set">PREF_PEN_SET</string>
     <string name="pref_key_pen_weight">PREF_KEY_PEN_WEIGHT</string>
@@ -29,4 +30,5 @@
     <string name="pref_key_shown_eraser">PREF_KEY_SHOWN_ERASER</string>
 
     <string name="list_images_title">保存した画像</string>
+    <string name="confirm_load_image">この画像を読み込みますか？</string>
 </resources>

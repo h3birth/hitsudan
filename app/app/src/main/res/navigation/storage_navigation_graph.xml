@@ -18,5 +18,9 @@
         android:id="@+id/storageImagePreviewFragment"
         android:name="app.birth.h3.feature.StorageImagePreviewFragment"
         android:label="fragment_storage_image_preview"
-        tools:layout="@layout/fragment_storage_image_preview" />
+        tools:layout="@layout/fragment_storage_image_preview" >
+        <argument
+            android:name="imageId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

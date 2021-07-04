@@ -10,6 +10,12 @@
     <dimen name="margin_2l">24dp</dimen>
     <dimen name="margin_3l">32dp</dimen>
 
+    <dimen name="text_l">16dp</dimen>
+    <dimen name="text_2l">18dp</dimen>
+    <dimen name="text_3l">20dp</dimen>
+
     <dimen name="toolbar_icon_size">50dp</dimen>
+    <dimen name="toolbar_backarrow_size">24dp</dimen>
+    <dimen name="toolbar_bottom_mask_height">150dp</dimen>
     <dimen name="storage_image_height">120dp</dimen>
 </resources>

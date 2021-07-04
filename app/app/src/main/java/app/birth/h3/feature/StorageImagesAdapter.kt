@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.birth.h3.databinding.ItemStorageImageBinding
 import app.birth.h3.local.entity.StorageImages
 
-class StorageImagesAdapter: PagingDataAdapter<StorageImages, StorageImagesAdapter.ViewHolder>(diffCallback) {
+class StorageImagesAdapter(val viewModel: StorageImageListViewModel): PagingDataAdapter<StorageImages, StorageImagesAdapter.ViewHolder>(diffCallback) {
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<StorageImages>() {
             override fun areItemsTheSame(oldItem: StorageImages, newItem: StorageImages): Boolean {
@@ -24,6 +24,7 @@ class StorageImagesAdapter: PagingDataAdapter<StorageImages, StorageImagesAdapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.storageImage = getItem(position)
+        holder.binding.viewModel = viewModel
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

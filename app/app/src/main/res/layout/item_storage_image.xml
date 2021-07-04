@@ -5,6 +5,9 @@
         <variable
             name="storageImage"
             type="app.birth.h3.local.entity.StorageImages" />
+        <variable
+            name="viewModel"
+            type="app.birth.h3.feature.StorageImageListViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
@@ -16,7 +19,7 @@
             android:scaleType="centerCrop"
             android:background="@drawable/border_grey"
             android:padding="1dp"
-            android:onClick="@null"
+            android:onClick="@{(v) -> viewModel.onClickImage(v, storageImage)}"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
