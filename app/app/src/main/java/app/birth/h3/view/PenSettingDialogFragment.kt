@@ -29,6 +29,9 @@ class PenSettingDialogFragment(val listener: Listener): DialogFragment() {
         binding.penColorPicker.setOnColorChangedListener {
             viewModel.setPenColorOnPicker(it)
         }
+        viewModel.hexCodePerseLong()?.let {
+            binding.penColorPicker.setColor(it)
+        }
 
         val dialog = AlertDialog.Builder(activity)
                 .setView(binding.root)

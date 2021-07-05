@@ -1,5 +1,6 @@
 package app.birth.h3.view
 
+import android.graphics.Color.parseColor
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +13,7 @@ import app.birth.h3.model.Color
 import app.birth.h3.repository.ColorRepository
 import app.birth.h3.repository.SharePreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,7 +59,7 @@ class PenSettingViewModel @Inject constructor(
         if(it) View.VISIBLE else View.GONE
     }
 
-    val customPenPicker = MutableLiveData(false)
+    val customPenPicker = MutableLiveData(spf.getUseCustomPen())
     val customPenPickerVisibility = customPenPicker.map {
         if(it) View.VISIBLE else View.GONE
     }
@@ -99,5 +101,16 @@ class PenSettingViewModel @Inject constructor(
     fun setPenColorOnPicker(colorInt: Int) {
         val hex = Integer.toHexString(colorInt)
         useCustomPenHex.postValue(hex)
+    }
+
+    fun hexCodePerseLong(): Int? {
+        return spf.getCustomPenColor()?.let {
+            try {
+                android.graphics.Color.parseColor(it)
+            } catch (e: NumberFormatException) {
+                Timber.e(it)
+                null
+            }
+        }
     }
 }
