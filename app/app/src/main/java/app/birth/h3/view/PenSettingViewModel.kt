@@ -24,6 +24,7 @@ class PenSettingViewModel @Inject constructor(
     var penColor = MutableLiveData(spf.getPenColor())
     var backgroundColor = MutableLiveData(spf.getBackgroundColor())
     val shownEraser = MutableLiveData(spf.getShownEraser())
+    var useCustomPenHex = MutableLiveData(spf.getCustomPenColor())
 
     // color
     val isBlack = Transformations.map (penColor) { isSelect(colors.black) }
@@ -76,6 +77,11 @@ class PenSettingViewModel @Inject constructor(
         spf.setPenColor(penColor.value ?: 1)
         spf.setBackgroundColor(backgroundColor.value ?: 1)
         spf.setShownEraser(shownEraser.value ?: false)
+        if(customPenPicker.value == true) {
+            spf.setUseCustomPen(true)
+            val hexCode = "#${useCustomPenHex.value ?: "000000"}"
+            spf.setCustomPenColor(hexCode)
+        }
     }
 
     fun onClickPenColor(color: Color) {
@@ -92,7 +98,6 @@ class PenSettingViewModel @Inject constructor(
 
     fun setPenColorOnPicker(colorInt: Int) {
         val hex = Integer.toHexString(colorInt)
-        colors.setCutomPenColor(hex)
-        penColor.postValue(colors.customColorId)
+        useCustomPenHex.postValue(hex)
     }
 }

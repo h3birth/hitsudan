@@ -43,4 +43,20 @@ class SharePreferenceRepositoryImpl @Inject constructor(
             commit()
         }
     }
+
+    override fun getCustomPenColor(): String? = spf.getString(context.getString(R.string.pref_custom_pen_color), "#000000")
+    override fun setCustomPenColor(value: String) {
+        with (spf.edit()) {
+            putString(context.getString(R.string.pref_custom_pen_color), value)
+            commit()
+        }
+    }
+
+    override fun getUseCustomPen(): Boolean = spf.getBoolean(context.getString(R.string.pref_use_custom_pen), false)
+    override fun setUseCustomPen(value: Boolean) {
+        with (spf.edit()) {
+            putBoolean(context.getString(R.string.pref_use_custom_pen), value)
+            commit()
+        }
+    }
 }

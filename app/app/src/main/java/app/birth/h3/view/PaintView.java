@@ -172,7 +172,7 @@ public class PaintView extends View {
     }
 
     public void setPenColor(){
-        Color current_color = color.getColorById(spf.getPenColor());
+        Color current_color = color.getPenColorById(spf.getPenColor(), spf.getUseCustomPen(), spf.getCustomPenColor());
         if(current_color == null) {
             current_color = color.getBlack();
         }

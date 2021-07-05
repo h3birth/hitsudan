@@ -14,4 +14,8 @@ interface SharePreferenceRepository {
     fun setBackgroundColor(value: Int)
     fun getShownEraser(): Boolean
     fun setShownEraser(value: Boolean)
+    fun getCustomPenColor(): String?
+    fun setCustomPenColor(value: String)
+    fun getUseCustomPen(): Boolean
+    fun setUseCustomPen(value: Boolean)
 }

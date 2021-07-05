@@ -26,22 +26,20 @@ class ColorRepositoryImpl @Inject constructor(): ColorRepository {
             Color(19, "LightYellow", "#FFF9C4"),
             Color(20, "LightBlue", "#BBDEFB")
     )
-    override val customColorId: Int = 99
-    override var customPenColor: Color? = null
 
     override fun listPenColors() : List<Color> = colors.subList(0, 14)
 
     override fun listBackgroundColors() : List<Color> = colors.subList(15, 19)
 
-    override fun getColorById(id: Int) = when(id == 99 && customPenColor != null) {
-        true -> customPenColor
+    override fun getColorById(id: Int) =  colors.find {
+        it.id == id
+    }
+
+    override fun getPenColorById(id: Int, useCustomPen: Boolean, customPenColor: String) = when(useCustomPen) {
+        true -> Color(99, "Custom", customPenColor)
         else -> colors.find {
             it.id == id
         }
-    }
-
-    override fun setCutomPenColor(colorHex: String) {
-        customPenColor = Color(customColorId, "Custom", "#${colorHex}")
     }
 
     override val black = colors.get(0)

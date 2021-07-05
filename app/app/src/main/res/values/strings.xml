@@ -28,6 +28,8 @@
     <string name="pref_key_pen_color">PREF_KEY_PEN_COLOR</string>
     <string name="pref_key_background_color">PREF_KEY_BACKGROUND_COLOR</string>
     <string name="pref_key_shown_eraser">PREF_KEY_SHOWN_ERASER</string>
+    <string name="pref_custom_pen_color">PREF_CUSTOM_PEN_COLOR</string>
+    <string name="pref_use_custom_pen">PREF_USE_CUSTOM_PEN</string>
 
     <string name="list_images_title">保存した画像</string>
     <string name="confirm_load_image">この画像を読み込みますか？</string>
